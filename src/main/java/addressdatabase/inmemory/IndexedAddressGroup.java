@@ -18,10 +18,10 @@ import java.util.Set;
  */
 public class IndexedAddressGroup implements AddressGroup {
 
-    private AddressBase addressBase;
-    private Map<Integer, Set<Address>> addressByHouseNo = new HashMap<Integer, Set<Address>>();
-    private Map<String, Set<Address>> addressByOrientationNo = new HashMap<String, Set<Address>>();
-    private Set<Address> allAddresses = new HashSet<Address>();
+    private final AddressBase addressBase;
+    private final Map<Integer, Set<Address>> addressByHouseNo = new HashMap<Integer, Set<Address>>();
+    private final Map<String, Set<Address>> addressByOrientationNo = new HashMap<String, Set<Address>>();
+    private final Set<Address> allAddresses = new HashSet<Address>();
 
     IndexedAddressGroup(AddressBase addressBase) {
         this.addressBase = addressBase;

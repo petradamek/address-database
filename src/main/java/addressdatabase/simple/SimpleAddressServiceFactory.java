@@ -26,7 +26,7 @@ public class SimpleAddressServiceFactory extends AddressServiceFactory {
 
     private static class AddressHandlerImpl implements AddressHandler {
 
-        private List<Address> addresses = new ArrayList<Address>();
+        private final List<Address> addresses = new ArrayList<Address>();
 
         @Override
         public void processAddress(AddressBase addressBase, String orientationNo, Integer houseNo, HouseNoType houseNoType) {

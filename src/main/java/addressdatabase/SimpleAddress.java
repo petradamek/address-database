@@ -7,15 +7,15 @@ package addressdatabase;
  */
 public class SimpleAddress extends AbstractAddress {
 
-    private String street;
-    private String orientationNo;
-    private Integer houseNo;
-    private HouseNoType houseNoType;
-    private String municipality;
-    private String municipalDistrict;
-    private String district;
-    private String postCode;
-    private String post;
+    private final String street;
+    private final String orientationNo;
+    private final Integer houseNo;
+    private final HouseNoType houseNoType;
+    private final String municipality;
+    private final String municipalDistrict;
+    private final String district;
+    private final String postCode;
+    private final String post;
 
     public SimpleAddress(
             String street,

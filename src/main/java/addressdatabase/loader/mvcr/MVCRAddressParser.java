@@ -24,8 +24,8 @@ public class MVCRAddressParser extends DefaultHandler {
 
     static final Logger logger = Logger.getLogger(MVCRAddressParser.class.getName());
 
-    private AddressHandler addressHandler;
-    private AddressBaseFactory addressBaseFactory = AddressBaseFactory.newInstance();
+    private final AddressHandler addressHandler;
+    private final AddressBaseFactory addressBaseFactory = AddressBaseFactory.newInstance();
     private StopWatch stopWatch;
     private long count;
 

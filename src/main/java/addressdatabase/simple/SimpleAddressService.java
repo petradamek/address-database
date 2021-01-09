@@ -15,7 +15,7 @@ import java.util.List;
  */
 public class SimpleAddressService implements AddressService {
 
-    private List<Address> addresses;
+    private final List<Address> addresses;
 
     SimpleAddressService(List<Address> addresses) {
         this.addresses = addresses;

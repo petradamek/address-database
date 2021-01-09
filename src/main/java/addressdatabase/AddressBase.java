@@ -5,15 +5,15 @@ package addressdatabase;
  */
 public class AddressBase {
 
-    private String street;
-    private int streetCode = -1;
-    private String municipality;
-    private int municipalityCode = -1;
-    private String municipalDistrict;
-    private int municipalDistrictCode = -1;
-    private String district;
-    private String postCode;
-    private String post;
+    private final String street;
+    private final int streetCode;
+    private final String municipality;
+    private final int municipalityCode;
+    private final String municipalDistrict;
+    private final int municipalDistrictCode;
+    private final String district;
+    private final String postCode;
+    private final String post;
 
     public AddressBase(
             String street, Integer streetCode,

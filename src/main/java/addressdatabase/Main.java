@@ -21,7 +21,7 @@ import java.util.logging.Logger;
  */
 public class Main {
 
-    private static Logger logger = Logger.getLogger(Main.class.getName());
+    private static final Logger logger = Logger.getLogger(Main.class.getName());
 
     private static Address address(
             String street, String orientationNo,

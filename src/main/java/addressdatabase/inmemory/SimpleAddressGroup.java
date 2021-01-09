@@ -15,8 +15,8 @@ import java.util.List;
  */
 public class SimpleAddressGroup implements AddressGroup {
 
-    private AddressBase addressBase;
-    private List<Address> addresses = new ArrayList<Address>();
+    private final AddressBase addressBase;
+    private final List<Address> addresses = new ArrayList<Address>();
 
     SimpleAddressGroup(AddressBase addressBase) {
         this.addressBase = addressBase;
@@ -55,9 +55,9 @@ public class SimpleAddressGroup implements AddressGroup {
 
     private class AddressImpl extends AbstractAddress {
 
-        private String orientationNo;
-        private Integer houseNo;
-        private HouseNoType houseNoType;
+        private final String orientationNo;
+        private final Integer houseNo;
+        private final HouseNoType houseNoType;
 
         public AddressImpl(String orientationNo, Integer houseNo, HouseNoType houseNoType) {
             this.orientationNo = orientationNo;

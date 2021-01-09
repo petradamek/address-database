@@ -20,9 +20,9 @@ import java.util.Map;
  */
 public class InMemoryAddressService implements AddressService {
 
-    private Map<String, List<AddressGroup>> addressGroupsByStreet = new HashMap<String, List<AddressGroup>>();
-    private Map<String, List<AddressGroup>> addressGroupsByMunicipality = new HashMap<String, List<AddressGroup>>();
-    private Map<String, List<AddressGroup>> addressGroupsByMunicipalDistrict = new HashMap<String, List<AddressGroup>>();
+    private final Map<String, List<AddressGroup>> addressGroupsByStreet = new HashMap<String, List<AddressGroup>>();
+    private final Map<String, List<AddressGroup>> addressGroupsByMunicipality = new HashMap<String, List<AddressGroup>>();
+    private final Map<String, List<AddressGroup>> addressGroupsByMunicipalDistrict = new HashMap<String, List<AddressGroup>>();
 
     InMemoryAddressService() {
     }
@@ -96,8 +96,8 @@ public class InMemoryAddressService implements AddressService {
 
     private class AddressHandlerImpl implements AddressHandler {
 
-        private AddressGroupFactory addressGroupFactory;
-        private Map<AddressBase, AddressGroup> addressGroups = new HashMap<AddressBase, AddressGroup>();
+        private final AddressGroupFactory addressGroupFactory;
+        private final Map<AddressBase, AddressGroup> addressGroups = new HashMap<AddressBase, AddressGroup>();
 
         public AddressHandlerImpl(AddressGroupFactory addressGroupFactory) {
             this.addressGroupFactory = addressGroupFactory;
