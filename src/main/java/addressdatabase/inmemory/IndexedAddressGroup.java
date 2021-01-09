@@ -15,9 +15,9 @@ import java.util.*;
  *
  * @author Petr Adámek
  */
-class IndexedAddressGroup implements AddressGroup {
+public class IndexedAddressGroup implements AddressGroup {
 
-    static class Factory implements AddressGroupFactory {
+    public static class Factory implements AddressGroupFactory {
 
         @Override
         public AddressGroup newAddressGroup(AddressBase addressBase) {
