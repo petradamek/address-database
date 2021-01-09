@@ -5,7 +5,6 @@ import addressdatabase.loader.DataLoader;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
@@ -30,11 +29,7 @@ public class MVCRDataLoader implements DataLoader {
     @Override
     public void loadData(AddressHandler addressHandler) throws IOException {
 
-        ZipInputStream zipInputStream = null;
-
-        try {
-            zipInputStream = new ZipInputStream(new FileInputStream(archiveName));
-
+        try (var zipInputStream = new ZipInputStream(new FileInputStream(archiveName))) {
             for (; ; ) {
                 ZipEntry zipEntry = zipInputStream.getNextEntry();
                 if (zipEntry == null) {
@@ -46,15 +41,6 @@ public class MVCRDataLoader implements DataLoader {
                 }
             }
             MVCRAddressParser.parseDatabase(addressHandler, zipInputStream);
-        } finally {
-            if (zipInputStream != null) {
-                try {
-                    zipInputStream.close();
-                } catch (IOException ex) {
-                    logger.log(Level.SEVERE,
-                            "Error when closing file " + archiveName, ex);
-                }
-            }
         }
     }
 }
