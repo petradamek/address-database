@@ -9,6 +9,7 @@ import addressdatabase.inmemory.IndexedAddressGroup;
 import addressdatabase.inmemory.SimpleAddressGroup;
 import addressdatabase.loader.mvcr.MVCRDataLoader;
 import addressdatabase.simple.SimpleAddressServiceFactory;
+import addressdatabase.time.StopWatch;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -54,18 +55,17 @@ public class Main {
 
         AddressService addressService = createAddressService();
 
-        long start = System.currentTimeMillis();
+        var stopWatch = StopWatch.start();
         final List<Address> inputAddresses = getInputAddresses();
         for (Address inputAddress : inputAddresses) {
             System.err.println("Input: " + inputAddress);
             Collection<Address> out = addressService.findAddress(inputAddress);
             System.err.println("Output: " + out);
         }
-        long end = System.currentTimeMillis();
-        double totalTime = (end - start) / 1000.0;
+        double totalTime = stopWatch.getDurationInMilliseconds();
         double oneRecordAvgTime = totalTime / inputAddresses.size();
-        logger.log(Level.INFO, "Total time: {0} s, average time for one record: {1} s",
-                new Object[]{totalTime, oneRecordAvgTime});
+        logger.log(Level.INFO, String.format("Total time: %,.3f ms, average time for one record: %,.3f ms",
+                totalTime, oneRecordAvgTime));
     }
 
     private static AddressService createAddressService() throws IOException {

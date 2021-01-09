@@ -6,13 +6,13 @@ import addressdatabase.AddressBaseFactory;
 import addressdatabase.loader.AddressHandler;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
+
+import addressdatabase.time.StopWatch;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
@@ -46,14 +46,14 @@ public class MVCRAddressParser extends DefaultHandler {
     }
     
     private AddressBaseFactory addressBaseFactory = AddressBaseFactory.newInstance();
-    private long startTime;
+    private StopWatch stopWatch;
     private long count;
     
     @Override
     public void endElement(String uri, String localName, String qName) throws SAXException {
         if (qName.equals("adresy")) {
-            logger.log(Level.INFO, "Loading data done, loaded {0} addresses, took {1} s", 
-                    new Object[] {count,(System.currentTimeMillis() - startTime)/1000d});
+            logger.log(Level.INFO, String.format("Loading data done, loaded %,d addresses, took %,.3f ms",
+                    count, stopWatch.getDurationInMilliseconds()));
         } else if (qName.equals("oblast")) {
             addressBaseFactory.setDistrict(null);
         } else if (qName.equals("obec")) {
@@ -91,7 +91,7 @@ public class MVCRAddressParser extends DefaultHandler {
     public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
         if (qName.equals("adresy")) {
             logger.log(Level.INFO, "Loading data, version is {0}", attributes.getValue("stav_k"));
-            startTime = System.currentTimeMillis();
+            stopWatch = StopWatch.start();
         } else if (qName.equals("oblast")) {
             addressBaseFactory.setDistrict(attributes.getValue("okres"));
         } else if (qName.equals("obec")) {
