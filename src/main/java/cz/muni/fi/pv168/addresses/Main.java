@@ -1,10 +1,11 @@
 package cz.muni.fi.pv168.addresses;
 
-import cz.muni.fi.pv168.addresses.inmemory.InMemoryAddressFinderFactory;
-import cz.muni.fi.pv168.addresses.inmemory.IndexedAddressGroup;
-import cz.muni.fi.pv168.addresses.inmemory.SimpleAddressGroup;
+import cz.muni.fi.pv168.addresses.finder.AddressFinder;
+import cz.muni.fi.pv168.addresses.finder.inmemory.InMemoryAddressFinderFactory;
+import cz.muni.fi.pv168.addresses.finder.inmemory.IndexedAddressGroup;
+import cz.muni.fi.pv168.addresses.finder.inmemory.SimpleAddressGroup;
 import cz.muni.fi.pv168.addresses.loader.mvcr.MVCRDataLoader;
-import cz.muni.fi.pv168.addresses.simple.SimpleAddressFinderFactory;
+import cz.muni.fi.pv168.addresses.finder.simple.SimpleAddressFinderFactory;
 import cz.muni.fi.pv168.addresses.time.StopWatch;
 
 import java.io.IOException;

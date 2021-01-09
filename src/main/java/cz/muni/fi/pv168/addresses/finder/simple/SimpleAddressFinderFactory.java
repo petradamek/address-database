@@ -1,10 +1,10 @@
-package cz.muni.fi.pv168.addresses.simple;
+package cz.muni.fi.pv168.addresses.finder.simple;
 
 import cz.muni.fi.pv168.addresses.Address;
 import cz.muni.fi.pv168.addresses.Address.HouseNoType;
 import cz.muni.fi.pv168.addresses.AddressBase;
-import cz.muni.fi.pv168.addresses.AddressFinder;
-import cz.muni.fi.pv168.addresses.AddressFinderFactory;
+import cz.muni.fi.pv168.addresses.finder.AddressFinder;
+import cz.muni.fi.pv168.addresses.finder.AddressFinderFactory;
 import cz.muni.fi.pv168.addresses.SimpleAddress;
 import cz.muni.fi.pv168.addresses.loader.AddressHandler;
 import cz.muni.fi.pv168.addresses.loader.DataLoader;

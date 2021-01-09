@@ -1,4 +1,4 @@
-package cz.muni.fi.pv168.addresses.inmemory;
+package cz.muni.fi.pv168.addresses.finder.inmemory;
 
 import cz.muni.fi.pv168.addresses.AddressBase;
 

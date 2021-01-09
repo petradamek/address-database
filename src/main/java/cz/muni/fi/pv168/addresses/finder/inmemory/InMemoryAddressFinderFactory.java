@@ -1,7 +1,7 @@
-package cz.muni.fi.pv168.addresses.inmemory;
+package cz.muni.fi.pv168.addresses.finder.inmemory;
 
-import cz.muni.fi.pv168.addresses.AddressFinder;
-import cz.muni.fi.pv168.addresses.AddressFinderFactory;
+import cz.muni.fi.pv168.addresses.finder.AddressFinder;
+import cz.muni.fi.pv168.addresses.finder.AddressFinderFactory;
 import cz.muni.fi.pv168.addresses.loader.DataLoader;
 
 import java.io.IOException;

@@ -1,4 +1,4 @@
-package cz.muni.fi.pv168.addresses;
+package cz.muni.fi.pv168.addresses.finder;
 
 import cz.muni.fi.pv168.addresses.loader.DataLoader;
 
