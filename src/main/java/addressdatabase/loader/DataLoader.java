@@ -9,5 +9,5 @@ import java.io.IOException;
  */
 public interface DataLoader {
 
-    public void loadData(AddressHandler addressHandler) throws IOException;
+    void loadData(AddressHandler addressHandler) throws IOException;
 }

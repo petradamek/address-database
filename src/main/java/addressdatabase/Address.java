@@ -79,7 +79,7 @@ public interface Address {
     /**
      * HouseNoType distinguish if the house number is Descriptive Number or Registration Number
      */
-    public static enum HouseNoType {
+    enum HouseNoType {
 
         /**
          * This type represent Descriptive House Number (<em>popisné číslo</em>).
