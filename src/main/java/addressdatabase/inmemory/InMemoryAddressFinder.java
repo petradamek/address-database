@@ -15,9 +15,9 @@ import java.util.Map;
 import java.util.function.Function;
 
 /**
- * This is standard implementation of AddressService that keeps data in memory
+ * Optimized {@link AddressFinder} implementation.
  *
- * @author petr
+ * Addresses are stored in multiple {@link Map}s to improve search performance.
  */
 final class InMemoryAddressFinder implements AddressFinder {
 

@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author petr
+ * Factory for {@link SimpleAddressFinder}.
  */
 public final class SimpleAddressFinderFactory extends AddressFinderFactory {
 

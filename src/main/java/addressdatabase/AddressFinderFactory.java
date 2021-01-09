@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.util.Objects;
 
 /**
- * @author petr
+ * Factory for {@link AddressFinder}.
  */
 public abstract class AddressFinderFactory {
 

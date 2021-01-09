@@ -9,9 +9,10 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * This is very simple implementation of AddressService
+ * Very simple {@link AddressFinder} implementation, which stores addresses in {@link List}.
  *
- * @author petr
+ * There is no optimization for improving search performance. {@link #findAddress(Address)}
+ * has to iterate over all the addresses every time.
  */
 final class SimpleAddressFinder implements AddressFinder {
 

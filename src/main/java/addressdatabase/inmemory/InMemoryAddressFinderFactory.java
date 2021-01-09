@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.Objects;
 
 /**
- * @author petr
+ * Factory for {@link InMemoryAddressFinder}.
  */
 public final class InMemoryAddressFinderFactory extends AddressFinderFactory {
 
