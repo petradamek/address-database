@@ -47,7 +47,7 @@ public class MVCRAddressParser extends DefaultHandler {
     }
 
     @Override
-    public void endElement(String uri, String localName, String qName) throws SAXException {
+    public void endElement(String uri, String localName, String qName) {
         if (qName.equals("adresy")) {
             logger.log(Level.INFO, String.format("Loading data done, loaded %,d addresses, took %,.3f ms",
                     count, stopWatch.getDurationInMilliseconds()));
