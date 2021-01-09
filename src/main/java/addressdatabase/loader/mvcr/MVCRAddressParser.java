@@ -48,20 +48,26 @@ public class MVCRAddressParser extends DefaultHandler {
 
     @Override
     public void endElement(String uri, String localName, String qName) {
-        if (qName.equals("adresy")) {
-            logger.log(Level.INFO, String.format("Loading data done, loaded %,d addresses, took %,.3f ms",
-                    count, stopWatch.getDurationInMilliseconds()));
-        } else if (qName.equals("oblast")) {
-            addressBaseFactory.setDistrict(null);
-        } else if (qName.equals("obec")) {
-            addressBaseFactory.setMunicipality(null);
-            addressBaseFactory.setMunicipalityCode(null);
-        } else if (qName.equals("cast")) {
-            addressBaseFactory.setMunicipalDistrict(null);
-            addressBaseFactory.setMunicipalDistrictCode(null);
-        } else if (qName.equals("ulice")) {
-            addressBaseFactory.setStreet(null);
-            addressBaseFactory.setStreetCode(null);
+        switch (qName) {
+            case "adresy":
+                logger.log(Level.INFO, String.format("Loading data done, loaded %,d addresses, took %,.3f ms",
+                        count, stopWatch.getDurationInMilliseconds()));
+                break;
+            case "oblast":
+                addressBaseFactory.setDistrict(null);
+                break;
+            case "obec":
+                addressBaseFactory.setMunicipality(null);
+                addressBaseFactory.setMunicipalityCode(null);
+                break;
+            case "cast":
+                addressBaseFactory.setMunicipalDistrict(null);
+                addressBaseFactory.setMunicipalDistrictCode(null);
+                break;
+            case "ulice":
+                addressBaseFactory.setStreet(null);
+                addressBaseFactory.setStreetCode(null);
+                break;
         }
     }
 
@@ -86,46 +92,53 @@ public class MVCRAddressParser extends DefaultHandler {
 
     @Override
     public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
-        if (qName.equals("adresy")) {
-            logger.log(Level.INFO, "Loading data, version is {0}", attributes.getValue("stav_k"));
-            stopWatch = StopWatch.start();
-        } else if (qName.equals("oblast")) {
-            addressBaseFactory.setDistrict(attributes.getValue("okres"));
-        } else if (qName.equals("obec")) {
-            addressBaseFactory.setMunicipality(attributes.getValue("nazev"));
-            addressBaseFactory.setMunicipalityCode(parseCode(attributes));
-        } else if (qName.equals("cast")) {
-            addressBaseFactory.setMunicipalDistrict(attributes.getValue("nazev"));
-            addressBaseFactory.setMunicipalDistrictCode(parseCode(attributes));
-        } else if (qName.equals("ulice")) {
-            addressBaseFactory.setStreet(attributes.getValue("nazev"));
-            addressBaseFactory.setStreetCode(parseCode(attributes));
-        } else if (qName.equals("a")) {
-            AddressBase addressBase = addressBaseFactory.newAddressBase();
-            String orientationNumber = attributes.getValue("o");
-            String registrationNumber = attributes.getValue("e");
-            String descritptiveNumber = attributes.getValue("p");
-            Integer houseNumber;
-            Address.HouseNoType houseNoType;
-            if (registrationNumber == null && descritptiveNumber != null) {
-                houseNumber = parseNumber(descritptiveNumber);
-                houseNoType = Address.HouseNoType.DESCRIPTIVE_NO;
-            } else if (registrationNumber != null && descritptiveNumber == null) {
-                houseNumber = parseNumber(registrationNumber);
-                houseNoType = Address.HouseNoType.REGISTRATION_NO;
-            } else {
-                logger.log(Level.WARNING,
-                        "Wrong address for {0}; registrationNumber = {1}, "
-                                + "descritptiveNumber = {2}, orientationNumber = {3}",
-                        new Object[]{addressBase, registrationNumber,
-                                descritptiveNumber, orientationNumber});
-                houseNumber = null;
-                houseNoType = null;
-            }
-            addressHandler.processAddress(addressBase, orientationNumber, houseNumber, houseNoType);
-            count++;
-        } else {
-            throw new SAXException("Unknown element: " + qName);
+        switch (qName) {
+            case "adresy":
+                logger.log(Level.INFO, "Loading data, version is {0}", attributes.getValue("stav_k"));
+                stopWatch = StopWatch.start();
+                break;
+            case "oblast":
+                addressBaseFactory.setDistrict(attributes.getValue("okres"));
+                break;
+            case "obec":
+                addressBaseFactory.setMunicipality(attributes.getValue("nazev"));
+                addressBaseFactory.setMunicipalityCode(parseCode(attributes));
+                break;
+            case "cast":
+                addressBaseFactory.setMunicipalDistrict(attributes.getValue("nazev"));
+                addressBaseFactory.setMunicipalDistrictCode(parseCode(attributes));
+                break;
+            case "ulice":
+                addressBaseFactory.setStreet(attributes.getValue("nazev"));
+                addressBaseFactory.setStreetCode(parseCode(attributes));
+                break;
+            case "a":
+                AddressBase addressBase = addressBaseFactory.newAddressBase();
+                String orientationNumber = attributes.getValue("o");
+                String registrationNumber = attributes.getValue("e");
+                String descritptiveNumber = attributes.getValue("p");
+                Integer houseNumber;
+                Address.HouseNoType houseNoType;
+                if (registrationNumber == null && descritptiveNumber != null) {
+                    houseNumber = parseNumber(descritptiveNumber);
+                    houseNoType = Address.HouseNoType.DESCRIPTIVE_NO;
+                } else if (registrationNumber != null && descritptiveNumber == null) {
+                    houseNumber = parseNumber(registrationNumber);
+                    houseNoType = Address.HouseNoType.REGISTRATION_NO;
+                } else {
+                    logger.log(Level.WARNING,
+                            "Wrong address for {0}; registrationNumber = {1}, "
+                                    + "descritptiveNumber = {2}, orientationNumber = {3}",
+                            new Object[]{addressBase, registrationNumber,
+                                    descritptiveNumber, orientationNumber});
+                    houseNumber = null;
+                    houseNoType = null;
+                }
+                addressHandler.processAddress(addressBase, orientationNumber, houseNumber, houseNoType);
+                count++;
+                break;
+            default:
+                throw new SAXException("Unknown element: " + qName);
         }
     }
 }
