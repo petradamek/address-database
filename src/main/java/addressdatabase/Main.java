@@ -65,9 +65,7 @@ public class Main {
 
     private static AddressService createAddressService() throws IOException {
 
-        var dataLoader = new MVCRDataLoader();
-        dataLoader.setArchiveName("adresy.zip");
-        dataLoader.setAddressesFileName("adresy.xml");
+        var dataLoader = new MVCRDataLoader("adresy.zip", "adresy.xml");
 
         var simpleAddressServiceFactory = new SimpleAddressServiceFactory();
         simpleAddressServiceFactory.setDataLoader(dataLoader);

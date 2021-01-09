@@ -5,6 +5,7 @@ import addressdatabase.loader.DataLoader;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.Objects;
 import java.util.logging.Logger;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
@@ -12,18 +13,14 @@ import java.util.zip.ZipInputStream;
 /**
  * @author Petr Adámek
  */
-public class MVCRDataLoader implements DataLoader {
+public final class MVCRDataLoader implements DataLoader {
 
-    private static final Logger logger = Logger.getLogger(MVCRDataLoader.class.getName());
-    private String archiveName;
-    private String addressesFileName;
+    private final String archiveName;
+    private final String addressesFileName;
 
-    public void setAddressesFileName(String addressesFileName) {
-        this.addressesFileName = addressesFileName;
-    }
-
-    public void setArchiveName(String archiveName) {
-        this.archiveName = archiveName;
+    public MVCRDataLoader(String archiveName, String addressesFileName) {
+        this.archiveName = Objects.requireNonNull(archiveName, "archiveName is null");
+        this.addressesFileName = Objects.requireNonNull(addressesFileName, "addressesFileName is null");
     }
 
     @Override
