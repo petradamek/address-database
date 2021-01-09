@@ -2,32 +2,32 @@ package addressdatabase;
 
 /**
  * This class represents address in Czech Republic
- * 
+ *
  * @author Petr Adámek
  */
 public class SimpleAddress extends AbstractAddress {
-    
+
     private String street;
     private String orientationNo;
-    private Integer houseNo;    
+    private Integer houseNo;
     private HouseNoType houseNoType;
     private String municipality;
-    private String municipalDistrict;    
+    private String municipalDistrict;
     private String district;
     private String postCode;
     private String post;
 
     public SimpleAddress(
-            String street, 
-            String orientationNo, 
-            Integer houseNo, 
-            HouseNoType houseNoType, 
-            String municipality, 
-            String municipalDistrict, 
-            String district, 
-            String postCode, 
+            String street,
+            String orientationNo,
+            Integer houseNo,
+            HouseNoType houseNoType,
+            String municipality,
+            String municipalDistrict,
+            String district,
+            String postCode,
             String post) {
-        
+
         this.street = street;
         this.orientationNo = orientationNo;
         this.houseNo = houseNo;
@@ -38,10 +38,13 @@ public class SimpleAddress extends AbstractAddress {
         this.postCode = postCode;
         this.post = post;
         validate();
-    }        
+    }
 
-    public SimpleAddress(AddressBase addressBase, String orientationNo, 
-            Integer houseNo, Address.HouseNoType houseNoType) {
+    public SimpleAddress(
+            AddressBase addressBase,
+            String orientationNo,
+            Integer houseNo,
+            Address.HouseNoType houseNoType) {
         this(
                 addressBase.getStreet(),
                 orientationNo,
@@ -51,9 +54,9 @@ public class SimpleAddress extends AbstractAddress {
                 addressBase.getMunicipalDistrict(),
                 addressBase.getDistrict(),
                 addressBase.getPostCode(),
-                addressBase.getPost());        
+                addressBase.getPost());
     }
-    
+
     @Override
     public String getDistrict() {
         return district;
@@ -96,6 +99,5 @@ public class SimpleAddress extends AbstractAddress {
     @Override
     public String getPost() {
         return post;
-    }        
-    
+    }
 }

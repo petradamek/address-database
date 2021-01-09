@@ -4,51 +4,48 @@ import addressdatabase.Address;
 import addressdatabase.AddressBase;
 import addressdatabase.AddressBaseFactory;
 import addressdatabase.loader.AddressHandler;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
-
 import addressdatabase.time.StopWatch;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
- *
  * @author Petr Adámek
  */
 public class MVCRAddressParser extends DefaultHandler {
-    
+
     static final Logger logger = Logger.getLogger(MVCRAddressParser.class.getName());
-    
+
     private AddressHandler addressHandler;
+    private AddressBaseFactory addressBaseFactory = AddressBaseFactory.newInstance();
+    private StopWatch stopWatch;
+    private long count;
 
     public MVCRAddressParser(AddressHandler addressHandler) {
         this.addressHandler = addressHandler;
     }
-            
-    public static void parseDatabase(AddressHandler addressHandler, 
-            InputStream addressesXml) throws IOException {
+
+    public static void parseDatabase(AddressHandler addressHandler,
+                                     InputStream addressesXml) throws IOException {
         try {
             SAXParserFactory factory = SAXParserFactory.newInstance();
             SAXParser parser = factory.newSAXParser();
             parser.parse(addressesXml, new MVCRAddressParser(addressHandler));
         } catch (ParserConfigurationException ex) {
-            throw new RuntimeException("Error when inicializing xml parser",ex);
+            throw new RuntimeException("Error when inicializing xml parser", ex);
         } catch (SAXException ex) {
             throw new IOException("Error when parsing addresses file", ex);
         }
-        
     }
-    
-    private AddressBaseFactory addressBaseFactory = AddressBaseFactory.newInstance();
-    private StopWatch stopWatch;
-    private long count;
-    
+
     @Override
     public void endElement(String uri, String localName, String qName) throws SAXException {
         if (qName.equals("adresy")) {
@@ -66,14 +63,14 @@ public class MVCRAddressParser extends DefaultHandler {
             addressBaseFactory.setStreet(null);
             addressBaseFactory.setStreetCode(null);
         }
-    }    
+    }
 
     private int parseCode(Attributes attributes) throws SAXException {
         try {
             return Integer.parseInt(attributes.getValue("kod"));
-        } catch(NumberFormatException ex) {
-            throw new SAXException("Error when parsing code '" + 
-                    attributes.getValue("kod") + "' for " + 
+        } catch (NumberFormatException ex) {
+            throw new SAXException("Error when parsing code '" +
+                    attributes.getValue("kod") + "' for " +
                     attributes.getValue("nazev"), ex);
         }
     }
@@ -81,12 +78,12 @@ public class MVCRAddressParser extends DefaultHandler {
     private Integer parseNumber(String number) throws SAXException {
         try {
             return Integer.parseInt(number);
-        } catch(NumberFormatException ex) {
-            throw new SAXException("Error when parsing house number '" + 
+        } catch (NumberFormatException ex) {
+            throw new SAXException("Error when parsing house number '" +
                     number + "'", ex);
         }
     }
-    
+
     @Override
     public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
         if (qName.equals("adresy")) {
@@ -116,21 +113,19 @@ public class MVCRAddressParser extends DefaultHandler {
             } else if (registrationNumber != null && descritptiveNumber == null) {
                 houseNumber = parseNumber(registrationNumber);
                 houseNoType = Address.HouseNoType.REGISTRATION_NO;
-            } else {                
-                logger.log(Level.WARNING, 
+            } else {
+                logger.log(Level.WARNING,
                         "Wrong address for {0}; registrationNumber = {1}, "
-                        + "descritptiveNumber = {2}, orientationNumber = {3}", 
-                        new Object[]{addressBase, registrationNumber, 
-                            descritptiveNumber, orientationNumber});
+                                + "descritptiveNumber = {2}, orientationNumber = {3}",
+                        new Object[]{addressBase, registrationNumber,
+                                descritptiveNumber, orientationNumber});
                 houseNumber = null;
-                houseNoType = null;                
-            }            
+                houseNoType = null;
+            }
             addressHandler.processAddress(addressBase, orientationNumber, houseNumber, houseNoType);
             count++;
         } else {
             throw new SAXException("Unknown element: " + qName);
         }
-    }    
-    
-    
+    }
 }

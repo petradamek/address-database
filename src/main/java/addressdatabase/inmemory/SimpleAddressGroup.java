@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package addressdatabase.inmemory;
 
 import addressdatabase.AbstractAddress;
@@ -9,26 +5,19 @@ import addressdatabase.Address;
 import addressdatabase.Address.HouseNoType;
 import addressdatabase.AddressBase;
 import addressdatabase.AddressTools;
-import java.util.*;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 /**
- *
  * @author Petr Adámek
  */
 public class SimpleAddressGroup implements AddressGroup {
 
-    public static class Factory implements AddressGroupFactory {
-
-        @Override
-        public AddressGroup newAddressGroup(AddressBase addressBase) {
-            return new SimpleAddressGroup(addressBase);
-        }
-        
-    }
-    
     private AddressBase addressBase;
     private List<Address> addresses = new ArrayList<Address>();
-    
+
     SimpleAddressGroup(AddressBase addressBase) {
         this.addressBase = addressBase;
     }
@@ -36,8 +25,8 @@ public class SimpleAddressGroup implements AddressGroup {
     @Override
     public AddressBase getAddressBase() {
         return addressBase;
-    }    
-    
+    }
+
     @Override
     public void addAddress(String orientationNo, Integer houseNo, HouseNoType houseNoType) {
         Address address = new AddressImpl(orientationNo, houseNo, houseNoType);
@@ -55,17 +44,26 @@ public class SimpleAddressGroup implements AddressGroup {
         return result;
     }
 
+    public static class Factory implements AddressGroupFactory {
+
+        @Override
+        public AddressGroup newAddressGroup(AddressBase addressBase) {
+            return new SimpleAddressGroup(addressBase);
+        }
+
+    }
+
     private class AddressImpl extends AbstractAddress {
 
         private String orientationNo;
-        private Integer houseNo;    
+        private Integer houseNo;
         private HouseNoType houseNoType;
 
         public AddressImpl(String orientationNo, Integer houseNo, HouseNoType houseNoType) {
             this.orientationNo = orientationNo;
             this.houseNo = houseNo;
             this.houseNoType = houseNoType;
-        }        
+        }
 
         @Override
         public String getStreet() {
@@ -87,7 +85,7 @@ public class SimpleAddressGroup implements AddressGroup {
             return orientationNo;
         }
 
-        
+
         @Override
         public String getMunicipality() {
             return addressBase.getMunicipality();
@@ -112,8 +110,5 @@ public class SimpleAddressGroup implements AddressGroup {
         public String getDistrict() {
             return addressBase.getDistrict();
         }
-        
     }
-    
-    
 }

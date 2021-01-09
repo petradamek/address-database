@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package addressdatabase;
 
 import addressdatabase.inmemory.InMemoryAddressServiceFactory;
@@ -19,15 +15,14 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
  * Aplikace ignoruje městské části a PSČ jednotlivých ulic.
- * 
+ *
  * @author petr
  */
 public class Main {
 
     private static Logger logger = Logger.getLogger(Main.class.getName());
-    
+
     private static Address address(
             String street, String orientationNo,
             String municipality, Integer houseNo) {
@@ -35,22 +30,22 @@ public class Main {
         return AddressFactory.newInstance().
                 setMunicipality(municipality).
                 setOrientationNo(orientationNo).
-                setStreet(street).                
+                setStreet(street).
                 setHouseNo(houseNo).
-                newAddress();                
-    }            
-    
+                newAddress();
+    }
+
     private static List<Address> getInputAddresses() {
         return Arrays.asList(
                 address("Botanická", "68a", "Brno", null),
                 address("Botanická", "68a", null, null),
-                address(null,null,"Chvalovice",33),
-                address(null,null,"Dolní Lhota",1),
+                address(null, null, "Chvalovice", 33),
+                address(null, null, "Dolní Lhota", 1),
                 address("Jindřišská", "1", null, null),
-                address(null,null,"Lhota",1)
+                address(null, null, "Lhota", 1)
         );
     }
-    
+
     public static void main(String[] args) throws IOException {
 
         AddressService addressService = createAddressService();

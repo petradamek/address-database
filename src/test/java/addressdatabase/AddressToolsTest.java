@@ -1,16 +1,18 @@
 package addressdatabase;
 
 import addressdatabase.Address.HouseNoType;
-import org.junit.*;
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*; 
+import org.junit.Test;
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
- *
  * @author petr
  */
 public class AddressToolsTest {
-    
+
     private Address emptyAddress() {
         Address result = mock(Address.class);
         when(result.getDistrict()).thenReturn(null);
@@ -24,19 +26,19 @@ public class AddressToolsTest {
         when(result.getStreet()).thenReturn(null);
         return result;
     }
-    
+
     @Test
     public void testMatch() {
 
         Address source, targetChvalovice, targetBotanicka, emptyAddress;
 
         emptyAddress = emptyAddress();
-        assertTrue(AddressTools.match(emptyAddress, emptyAddress));        
-        
+        assertTrue(AddressTools.match(emptyAddress, emptyAddress));
+
         source = AddressFactory.newInstance().
                 setMunicipality("Chvalovice").
                 newAddress();
-        
+
         targetChvalovice = AddressFactory.newInstance().
                 setMunicipality("Chvalovice").
                 setMunicipalDistrict("Hatě").
@@ -45,7 +47,7 @@ public class AddressToolsTest {
                 setDistrict("Znojmo").
                 setPostCode("669 02").
                 newAddress();
-        
+
         assertTrue(AddressTools.match(source, targetChvalovice));
 
         source = AddressFactory.newInstance().
@@ -54,7 +56,7 @@ public class AddressToolsTest {
                 newAddress();
 
         assertTrue(AddressTools.match(source, targetChvalovice));
-        
+
         source = AddressFactory.newInstance().
                 setMunicipality("Chvalovice").
                 setHouseNo(10).
@@ -81,14 +83,14 @@ public class AddressToolsTest {
                 setDistrict("Brno-město").
                 setPost("Brno 2").
                 newAddress();
-        
+
         source = AddressFactory.newInstance().
                 setMunicipality("Brno").
                 setOrientationNo("68a").
                 newAddress();
 
         assertTrue(AddressTools.match(source, targetBotanicka));
-        
+
         source = AddressFactory.newInstance().
                 setStreet("Botanická").
                 newAddress();
@@ -108,7 +110,7 @@ public class AddressToolsTest {
         Address address;
 
         address = emptyAddress();
-        assertTrue(AddressTools.isEmpty(address));        
+        assertTrue(AddressTools.isEmpty(address));
 
 //        address = AddressFactory.newInstance().setDistrict("X").newAddress();
 //        assertFalse(AddressTools.isEmpty(address));        
@@ -126,18 +128,18 @@ public class AddressToolsTest {
         assertFalse(AddressTools.isEmpty(address));
 
         address = AddressFactory.newInstance().setMunicipalDistrict("X").newAddress();
-        assertFalse(AddressTools.isEmpty(address));        
+        assertFalse(AddressTools.isEmpty(address));
 
         address = AddressFactory.newInstance().setMunicipality("X").newAddress();
-        assertFalse(AddressTools.isEmpty(address));        
+        assertFalse(AddressTools.isEmpty(address));
 
         address = AddressFactory.newInstance().setStreet("X").newAddress();
-        assertFalse(AddressTools.isEmpty(address));        
+        assertFalse(AddressTools.isEmpty(address));
 
         address = AddressFactory.newInstance().setPost("X").newAddress();
-        assertFalse(AddressTools.isEmpty(address));        
+        assertFalse(AddressTools.isEmpty(address));
 
         address = AddressFactory.newInstance().setPostCode("111 00").newAddress();
-        assertFalse(AddressTools.isEmpty(address));        
+        assertFalse(AddressTools.isEmpty(address));
     }
 }

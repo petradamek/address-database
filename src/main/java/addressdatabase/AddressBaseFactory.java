@@ -2,7 +2,7 @@ package addressdatabase;
 
 /**
  * This class is not thread safe!
- * 
+ *
  * @author petr
  */
 public class AddressBaseFactory {
@@ -15,15 +15,19 @@ public class AddressBaseFactory {
     private Integer municipalDistrictCode = -1;
     private String district;
     private String postCode;
-    private String post;    
-    
+    private String post;
+
     private AddressBase addressBase;
-    
+
+    private AddressBaseFactory() {
+    }
+
+    public static AddressBaseFactory newInstance() {
+        return new AddressBaseFactory();
+    }
+
     private void invalidate() {
         addressBase = null;
-    }
-    
-    private AddressBaseFactory() {
     }
 
     public void setDistrict(String district) {
@@ -70,21 +74,16 @@ public class AddressBaseFactory {
         invalidate();
         this.streetCode = streetCode;
     }
-    
-    public static AddressBaseFactory newInstance() {        
-        return new AddressBaseFactory();
-    }
 
     public AddressBase newAddressBase() {
         if (addressBase == null) {
             addressBase = new AddressBase(
-                street, streetCode, 
-                municipality, municipalityCode, 
-                municipalDistrict, municipalDistrictCode, 
-                district, 
-                postCode, post);
+                    street, streetCode,
+                    municipality, municipalityCode,
+                    municipalDistrict, municipalDistrictCode,
+                    district,
+                    postCode, post);
         }
         return addressBase;
     }
-    
 }

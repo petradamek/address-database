@@ -1,15 +1,10 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package addressdatabase;
 
 /**
- *
  * @author petr
  */
 public class AddressBase {
-    
+
     private String street;
     private int streetCode = -1;
     private String municipality;
@@ -20,21 +15,13 @@ public class AddressBase {
     private String postCode;
     private String post;
 
-    private static int integerToInt(Integer i) {
-        return i==null?-1:i.intValue();
-    }
-
-    private static Integer intToInteger(int i) {
-        return i==-1?null:Integer.valueOf(i);
-    }
-
     public AddressBase(
-            String street, Integer streetCode, 
-            String municipality, Integer municipalityCode, 
-            String municipalDistrict, Integer municipalDistrictCode, 
-            String district, 
+            String street, Integer streetCode,
+            String municipality, Integer municipalityCode,
+            String municipalDistrict, Integer municipalDistrictCode,
+            String district,
             String postCode, String post) {
-        
+
         this.street = street;
         this.streetCode = integerToInt(streetCode);
         this.municipality = municipality;
@@ -44,6 +31,14 @@ public class AddressBase {
         this.district = district;
         this.postCode = postCode;
         this.post = post;
+    }
+
+    private static int integerToInt(Integer i) {
+        return i == null ? -1 : i.intValue();
+    }
+
+    private static Integer intToInteger(int i) {
+        return i == -1 ? null : Integer.valueOf(i);
     }
 
     public String getDistrict() {
@@ -84,16 +79,15 @@ public class AddressBase {
 
     @Override
     public String toString() {
-        return "AddressBase{" + 
-                "street=" + street + 
-                ", streetCode=" + streetCode + 
-                ", municipality=" + municipality + 
+        return "AddressBase{" +
+                "street=" + street +
+                ", streetCode=" + streetCode +
+                ", municipality=" + municipality +
                 ", municipalityCode=" + municipalityCode +
-                ", municipalDistrict=" + municipalDistrict + 
-                ", municipalDistrictCode=" + municipalDistrictCode + 
-                ", district=" + district + 
-                ", postCode=" + postCode + 
+                ", municipalDistrict=" + municipalDistrict +
+                ", municipalDistrictCode=" + municipalDistrictCode +
+                ", district=" + district +
+                ", postCode=" + postCode +
                 ", post=" + post + '}';
     }
-    
 }
