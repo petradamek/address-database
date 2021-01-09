@@ -23,7 +23,7 @@ public class SimpleAddressService implements AddressService {
 
     @Override
     public Collection<Address> findAddress(Address address) {
-        List<Address> result = new ArrayList<Address>();
+        List<Address> result = new ArrayList<>();
         for (Address searchedAddress : addresses) {
             if (AddressTools.match(address, searchedAddress)) {
                 result.add(searchedAddress);

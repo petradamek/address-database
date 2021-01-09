@@ -19,9 +19,9 @@ import java.util.Set;
 public class IndexedAddressGroup implements AddressGroup {
 
     private final AddressBase addressBase;
-    private final Map<Integer, Set<Address>> addressByHouseNo = new HashMap<Integer, Set<Address>>();
-    private final Map<String, Set<Address>> addressByOrientationNo = new HashMap<String, Set<Address>>();
-    private final Set<Address> allAddresses = new HashSet<Address>();
+    private final Map<Integer, Set<Address>> addressByHouseNo = new HashMap<>();
+    private final Map<String, Set<Address>> addressByOrientationNo = new HashMap<>();
+    private final Set<Address> allAddresses = new HashSet<>();
 
     IndexedAddressGroup(AddressBase addressBase) {
         this.addressBase = addressBase;
@@ -30,7 +30,7 @@ public class IndexedAddressGroup implements AddressGroup {
     private static <K> Set<Address> getAddressSet(Map<K, Set<Address>> addresses, K key) {
         Set<Address> result = addresses.get(key);
         if (result == null) {
-            result = new HashSet<Address>();
+            result = new HashSet<>();
             addresses.put(key, result);
         }
         return result;
@@ -61,7 +61,7 @@ public class IndexedAddressGroup implements AddressGroup {
         if (preFilteredAddresses == null) {
             return Collections.emptySet();
         }
-        Set<Address> result = new HashSet<Address>();
+        Set<Address> result = new HashSet<>();
         for (Address searchedAddress : preFilteredAddresses) {
             if (AddressTools.matchNumbers(orientationNo, houseNo, houseNoType, searchedAddress)) {
                 result.add(searchedAddress);

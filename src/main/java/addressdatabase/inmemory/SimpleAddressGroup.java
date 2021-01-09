@@ -16,7 +16,7 @@ import java.util.List;
 public class SimpleAddressGroup implements AddressGroup {
 
     private final AddressBase addressBase;
-    private final List<Address> addresses = new ArrayList<Address>();
+    private final List<Address> addresses = new ArrayList<>();
 
     SimpleAddressGroup(AddressBase addressBase) {
         this.addressBase = addressBase;
@@ -35,7 +35,7 @@ public class SimpleAddressGroup implements AddressGroup {
 
     @Override
     public Collection<Address> findAddress(String orientationNo, Integer houseNo, HouseNoType houseNoType) {
-        List<Address> result = new ArrayList<Address>();
+        List<Address> result = new ArrayList<>();
         for (Address searchedAddress : addresses) {
             if (AddressTools.matchNumbers(orientationNo, houseNo, houseNoType, searchedAddress)) {
                 result.add(searchedAddress);

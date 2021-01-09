@@ -20,9 +20,9 @@ import java.util.Map;
  */
 public class InMemoryAddressService implements AddressService {
 
-    private final Map<String, List<AddressGroup>> addressGroupsByStreet = new HashMap<String, List<AddressGroup>>();
-    private final Map<String, List<AddressGroup>> addressGroupsByMunicipality = new HashMap<String, List<AddressGroup>>();
-    private final Map<String, List<AddressGroup>> addressGroupsByMunicipalDistrict = new HashMap<String, List<AddressGroup>>();
+    private final Map<String, List<AddressGroup>> addressGroupsByStreet = new HashMap<>();
+    private final Map<String, List<AddressGroup>> addressGroupsByMunicipality = new HashMap<>();
+    private final Map<String, List<AddressGroup>> addressGroupsByMunicipalDistrict = new HashMap<>();
 
     InMemoryAddressService() {
     }
@@ -34,7 +34,7 @@ public class InMemoryAddressService implements AddressService {
     private static <K> List<AddressGroup> getAddressGroup(Map<K, List<AddressGroup>> addressGroups, K key) {
         List<AddressGroup> result = addressGroups.get(key);
         if (result == null) {
-            result = new ArrayList<AddressGroup>();
+            result = new ArrayList<>();
             addressGroups.put(key, result);
         }
         return result;
@@ -72,7 +72,7 @@ public class InMemoryAddressService implements AddressService {
         } else {
             throw new IllegalArgumentException("At least street or municipal or municipalDistrict must be specified");
         }
-        List<AddressGroup> result = new ArrayList<AddressGroup>();
+        List<AddressGroup> result = new ArrayList<>();
         for (AddressGroup searchedAddressGroup : prefilteredAddressGroup) {
             if (AddressTools.match(address, searchedAddressGroup.getAddressBase())) {
                 result.add(searchedAddressGroup);
@@ -84,7 +84,7 @@ public class InMemoryAddressService implements AddressService {
     @Override
     public Collection<Address> findAddress(Address address) {
         Collection<AddressGroup> addressGroups = findAddressGroup(address);
-        List<Address> result = new ArrayList<Address>();
+        List<Address> result = new ArrayList<>();
         for (AddressGroup addressGroup : addressGroups) {
             result.addAll(addressGroup.findAddress(
                     address.getOrientationNo(),
@@ -97,7 +97,7 @@ public class InMemoryAddressService implements AddressService {
     private class AddressHandlerImpl implements AddressHandler {
 
         private final AddressGroupFactory addressGroupFactory;
-        private final Map<AddressBase, AddressGroup> addressGroups = new HashMap<AddressBase, AddressGroup>();
+        private final Map<AddressBase, AddressGroup> addressGroups = new HashMap<>();
 
         public AddressHandlerImpl(AddressGroupFactory addressGroupFactory) {
             this.addressGroupFactory = addressGroupFactory;
