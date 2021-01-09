@@ -113,14 +113,17 @@ public class AddressToolsTest {
 //        address = AddressFactory.newInstance().setDistrict("X").newAddress();
 //        assertFalse(AddressTools.isEmpty(address));        
 
-        address = AddressFactory.newInstance().setHouseNo(1).newAddress();
-        assertFalse(AddressTools.isEmpty(address));        
+        address = emptyAddress();
+        when(address.getHouseNo()).thenReturn(1);
+        assertFalse(AddressTools.isEmpty(address));
 
-        address = AddressFactory.newInstance().setHouseNoType(HouseNoType.DESCRIPTIVE_NO).newAddress();
-        assertFalse(AddressTools.isEmpty(address));        
+        address = emptyAddress();
+        when(address.getHouseNoType()).thenReturn(HouseNoType.DESCRIPTIVE_NO);
+        assertFalse(AddressTools.isEmpty(address));
 
-        address = AddressFactory.newInstance().setOrientationNo("1a").newAddress();
-        assertFalse(AddressTools.isEmpty(address));        
+        address = emptyAddress();
+        when(address.getOrientationNo()).thenReturn("1a");
+        assertFalse(AddressTools.isEmpty(address));
 
         address = AddressFactory.newInstance().setMunicipalDistrict("X").newAddress();
         assertFalse(AddressTools.isEmpty(address));        
