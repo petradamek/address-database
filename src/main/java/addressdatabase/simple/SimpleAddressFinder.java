@@ -1,7 +1,7 @@
 package addressdatabase.simple;
 
 import addressdatabase.Address;
-import addressdatabase.AddressService;
+import addressdatabase.AddressFinder;
 import addressdatabase.AddressTools;
 
 import java.util.ArrayList;
@@ -13,11 +13,11 @@ import java.util.List;
  *
  * @author petr
  */
-public class SimpleAddressService implements AddressService {
+final class SimpleAddressFinder implements AddressFinder {
 
     private final List<Address> addresses;
 
-    SimpleAddressService(List<Address> addresses) {
+    SimpleAddressFinder(List<Address> addresses) {
         this.addresses = addresses;
     }
 

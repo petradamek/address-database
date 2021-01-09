@@ -1,7 +1,7 @@
 package addressdatabase.inmemory;
 
-import addressdatabase.AddressService;
-import addressdatabase.AddressServiceFactory;
+import addressdatabase.AddressFinder;
+import addressdatabase.AddressFinderFactory;
 import addressdatabase.loader.DataLoader;
 
 import java.io.IOException;
@@ -10,18 +10,18 @@ import java.util.Objects;
 /**
  * @author petr
  */
-public final class InMemoryAddressServiceFactory extends AddressServiceFactory {
+public final class InMemoryAddressFinderFactory extends AddressFinderFactory {
 
     private final AddressGroupFactory addressGroupFactory;
 
-    public InMemoryAddressServiceFactory(DataLoader dataLoader, AddressGroupFactory addressGroupFactory) {
+    public InMemoryAddressFinderFactory(DataLoader dataLoader, AddressGroupFactory addressGroupFactory) {
         super(dataLoader);
         this.addressGroupFactory = Objects.requireNonNull(addressGroupFactory, "addressGroupFactory is null");
     }
 
     @Override
-    public AddressService newAddressService() throws IOException {
-        InMemoryAddressService service = new InMemoryAddressService();
+    public AddressFinder newAddressFinder() throws IOException {
+        InMemoryAddressFinder service = new InMemoryAddressFinder();
         getDataLoader().loadData(service.newAddressHandler(addressGroupFactory));
         return service;
     }

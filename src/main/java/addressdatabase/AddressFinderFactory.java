@@ -8,11 +8,11 @@ import java.util.Objects;
 /**
  * @author petr
  */
-public abstract class AddressServiceFactory {
+public abstract class AddressFinderFactory {
 
     private final DataLoader dataLoader;
 
-    public AddressServiceFactory(DataLoader dataLoader) {
+    public AddressFinderFactory(DataLoader dataLoader) {
         this.dataLoader = Objects.requireNonNull(dataLoader, "dataLoader is null");
     }
 
@@ -20,5 +20,5 @@ public abstract class AddressServiceFactory {
         return dataLoader;
     }
 
-    public abstract AddressService newAddressService() throws IOException;
+    public abstract AddressFinder newAddressFinder() throws IOException;
 }

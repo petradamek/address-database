@@ -3,12 +3,11 @@ package addressdatabase.simple;
 import addressdatabase.Address;
 import addressdatabase.Address.HouseNoType;
 import addressdatabase.AddressBase;
-import addressdatabase.AddressService;
-import addressdatabase.AddressServiceFactory;
+import addressdatabase.AddressFinder;
+import addressdatabase.AddressFinderFactory;
 import addressdatabase.SimpleAddress;
 import addressdatabase.loader.AddressHandler;
 import addressdatabase.loader.DataLoader;
-import addressdatabase.loader.mvcr.MVCRDataLoader;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -17,17 +16,17 @@ import java.util.List;
 /**
  * @author petr
  */
-public final class SimpleAddressServiceFactory extends AddressServiceFactory {
+public final class SimpleAddressFinderFactory extends AddressFinderFactory {
 
-    public SimpleAddressServiceFactory(DataLoader dataLoader) {
+    public SimpleAddressFinderFactory(DataLoader dataLoader) {
         super(dataLoader);
     }
 
     @Override
-    public AddressService newAddressService() throws IOException {
+    public AddressFinder newAddressFinder() throws IOException {
         AddressHandlerImpl addressHandler = new AddressHandlerImpl();
         getDataLoader().loadData(addressHandler);
-        return new SimpleAddressService(addressHandler.addresses);
+        return new SimpleAddressFinder(addressHandler.addresses);
     }
 
     private static class AddressHandlerImpl implements AddressHandler {

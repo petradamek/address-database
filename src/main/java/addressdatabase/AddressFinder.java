@@ -7,7 +7,7 @@ import java.util.Collection;
  *
  * @author Petr Adámek
  */
-public interface AddressService {
+public interface AddressFinder {
 
     Collection<Address> findAddress(Address address);
 }

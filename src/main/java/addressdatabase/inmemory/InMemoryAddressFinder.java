@@ -3,7 +3,7 @@ package addressdatabase.inmemory;
 import addressdatabase.Address;
 import addressdatabase.Address.HouseNoType;
 import addressdatabase.AddressBase;
-import addressdatabase.AddressService;
+import addressdatabase.AddressFinder;
 import addressdatabase.AddressTools;
 import addressdatabase.loader.AddressHandler;
 
@@ -19,13 +19,13 @@ import java.util.function.Function;
  *
  * @author petr
  */
-public class InMemoryAddressService implements AddressService {
+final class InMemoryAddressFinder implements AddressFinder {
 
     private final Map<String, List<AddressGroup>> addressGroupsByStreet = new HashMap<>();
     private final Map<String, List<AddressGroup>> addressGroupsByMunicipality = new HashMap<>();
     private final Map<String, List<AddressGroup>> addressGroupsByMunicipalDistrict = new HashMap<>();
 
-    InMemoryAddressService() {
+    InMemoryAddressFinder() {
     }
 //    private Map<String,List<AddressGroup>> addressGroupsByPost = 
 //            new HashMap<String, List<AddressGroup>>();            

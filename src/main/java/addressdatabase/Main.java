@@ -1,10 +1,10 @@
 package addressdatabase;
 
-import addressdatabase.inmemory.InMemoryAddressServiceFactory;
+import addressdatabase.inmemory.InMemoryAddressFinderFactory;
 import addressdatabase.inmemory.IndexedAddressGroup;
 import addressdatabase.inmemory.SimpleAddressGroup;
 import addressdatabase.loader.mvcr.MVCRDataLoader;
-import addressdatabase.simple.SimpleAddressServiceFactory;
+import addressdatabase.simple.SimpleAddressFinderFactory;
 import addressdatabase.time.StopWatch;
 
 import java.io.IOException;
@@ -48,13 +48,13 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
 
-        AddressService addressService = createAddressService();
+        AddressFinder addressFinder = createAddressFinder();
 
         var stopWatch = StopWatch.start();
         final List<Address> inputAddresses = getInputAddresses();
         for (Address inputAddress : inputAddresses) {
             System.err.println("Input: " + inputAddress);
-            Collection<Address> out = addressService.findAddress(inputAddress);
+            Collection<Address> out = addressFinder.findAddress(inputAddress);
             System.err.println("Output: " + out);
         }
         double totalTime = stopWatch.getDurationInMilliseconds();
@@ -63,11 +63,11 @@ public class Main {
                 totalTime, oneRecordAvgTime));
     }
 
-    private static AddressService createAddressService() throws IOException {
+    private static AddressFinder createAddressFinder() throws IOException {
 
         var dataLoader = new MVCRDataLoader("adresy.zip", "adresy.xml");
 
-        var simpleAddressServiceFactory = new SimpleAddressServiceFactory(dataLoader);
+        var simpleAddressFinderFactory = new SimpleAddressFinderFactory(dataLoader);
 
         var simpleAddressGroupFactory = new SimpleAddressGroup.Factory();
         var indexedAddressGroupFactory = new IndexedAddressGroup.Factory();
@@ -75,11 +75,11 @@ public class Main {
         var addressGroupFactory = indexedAddressGroupFactory;
         //var addressGroupFactory = simpleAddressGroupFactory;
 
-        var inMemoryAddressServiceFactory = new InMemoryAddressServiceFactory(dataLoader, addressGroupFactory);
+        var inMemoryAddressFinderFactory = new InMemoryAddressFinderFactory(dataLoader, addressGroupFactory);
 
-        var serviceFactory = simpleAddressServiceFactory;
-        //var serviceFactory = inMemoryAddressServiceFactory;
+        var addressFinderFactory = simpleAddressFinderFactory;
+        //var addressFinderFactory = inMemoryAddressFinderFactory;
 
-        return serviceFactory.newAddressService();
+        return addressFinderFactory.newAddressFinder();
     }
 }
