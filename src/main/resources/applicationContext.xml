@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+       <bean id="dataLoader" class="addressdatabase.loader.mvcr.MVCRDataLoader">
+           <property name="archiveName" value="adresy.zip"/>
+           <property name="addressesFileName" value="adresy.xml"/>
+       </bean>
+
+       <bean id="simpleAddressServiceFactory" class="addressdatabase.simple.SimpleAddressServiceFactory" lazy-init="true">
+           <property name="dataLoader" ref="dataLoader"/>
+       </bean>
+
+       <bean id="simpleAddressGroupFactory" class="addressdatabase.inmemory.SimpleAddressGroup$Factory" lazy-init="true"/>
+
+       <bean id="indexedAddressGroupFactory" class="addressdatabase.inmemory.IndexedAddressGroup$Factory" lazy-init="true"/>
+       
+       <bean id="inMemoryAddressServiceFactory" class="addressdatabase.inmemory.InMemoryAddressServiceFactory" lazy-init="true">
+           <property name="dataLoader" ref="dataLoader"/>
+           <property name="addressGroupFactory" ref="indexedAddressGroupFactory"/>
+       </bean>
+              
+       <alias name="simpleAddressServiceFactory" alias="addressServiceFactory"/>
+       <!--alias name="inMemoryAddressServiceFactory" alias="addressServiceFactory"/-->
+
+       <bean id="addressService" factory-bean="addressServiceFactory" factory-method="newAddressService"/>
+           
+</beans>
