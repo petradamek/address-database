@@ -7,6 +7,8 @@ import addressdatabase.AddressService;
 import addressdatabase.AddressServiceFactory;
 import addressdatabase.SimpleAddress;
 import addressdatabase.loader.AddressHandler;
+import addressdatabase.loader.DataLoader;
+import addressdatabase.loader.mvcr.MVCRDataLoader;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -15,7 +17,11 @@ import java.util.List;
 /**
  * @author petr
  */
-public class SimpleAddressServiceFactory extends AddressServiceFactory {
+public final class SimpleAddressServiceFactory extends AddressServiceFactory {
+
+    public SimpleAddressServiceFactory(DataLoader dataLoader) {
+        super(dataLoader);
+    }
 
     @Override
     public AddressService newAddressService() throws IOException {

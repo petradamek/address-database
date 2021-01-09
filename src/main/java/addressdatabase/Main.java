@@ -67,17 +67,15 @@ public class Main {
 
         var dataLoader = new MVCRDataLoader("adresy.zip", "adresy.xml");
 
-        var simpleAddressServiceFactory = new SimpleAddressServiceFactory();
-        simpleAddressServiceFactory.setDataLoader(dataLoader);
+        var simpleAddressServiceFactory = new SimpleAddressServiceFactory(dataLoader);
 
         var simpleAddressGroupFactory = new SimpleAddressGroup.Factory();
         var indexedAddressGroupFactory = new IndexedAddressGroup.Factory();
 
-        var inMemoryAddressServiceFactory = new InMemoryAddressServiceFactory();
-        inMemoryAddressServiceFactory.setDataLoader(dataLoader);
+        var addressGroupFactory = indexedAddressGroupFactory;
+        //var addressGroupFactory = simpleAddressGroupFactory;
 
-        inMemoryAddressServiceFactory.setAddressGroupFactory(indexedAddressGroupFactory);
-        //inMemoryAddressServiceFactory.setAddressGroupFactory(simpleAddressGroupFactory);
+        var inMemoryAddressServiceFactory = new InMemoryAddressServiceFactory(dataLoader, addressGroupFactory);
 
         var serviceFactory = simpleAddressServiceFactory;
         //var serviceFactory = inMemoryAddressServiceFactory;

@@ -2,18 +2,21 @@ package addressdatabase.inmemory;
 
 import addressdatabase.AddressService;
 import addressdatabase.AddressServiceFactory;
+import addressdatabase.loader.DataLoader;
 
 import java.io.IOException;
+import java.util.Objects;
 
 /**
  * @author petr
  */
-public class InMemoryAddressServiceFactory extends AddressServiceFactory {
+public final class InMemoryAddressServiceFactory extends AddressServiceFactory {
 
-    private AddressGroupFactory addressGroupFactory;
+    private final AddressGroupFactory addressGroupFactory;
 
-    public void setAddressGroupFactory(AddressGroupFactory addressGroupFactory) {
-        this.addressGroupFactory = addressGroupFactory;
+    public InMemoryAddressServiceFactory(DataLoader dataLoader, AddressGroupFactory addressGroupFactory) {
+        super(dataLoader);
+        this.addressGroupFactory = Objects.requireNonNull(addressGroupFactory, "addressGroupFactory is null");
     }
 
     @Override
