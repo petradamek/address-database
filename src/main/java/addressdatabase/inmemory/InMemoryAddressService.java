@@ -12,6 +12,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 
 /**
  * This is standard implementation of AddressService that keeps data in memory
@@ -31,15 +32,6 @@ public class InMemoryAddressService implements AddressService {
 //    private Map<String,List<AddressGroup>> addressGroupsByPostCode = 
 //            new HashMap<String, List<AddressGroup>>();            
 
-    private static <K> List<AddressGroup> getAddressGroup(Map<K, List<AddressGroup>> addressGroups, K key) {
-        List<AddressGroup> result = addressGroups.get(key);
-        if (result == null) {
-            result = new ArrayList<>();
-            addressGroups.put(key, result);
-        }
-        return result;
-    }
-
     AddressHandler newAddressHandler(AddressGroupFactory addressGroupFactory) {
         return new AddressHandlerImpl(addressGroupFactory);
     }
@@ -53,12 +45,14 @@ public class InMemoryAddressService implements AddressService {
     }
 
     private void addAddressGroup(AddressGroup addressGroup) {
-        getAddressGroup(addressGroupsByStreet,
-                toUpperCase(addressGroup.getAddressBase().getStreet())).add(addressGroup);
-        getAddressGroup(addressGroupsByMunicipality,
-                toUpperCase(addressGroup.getAddressBase().getMunicipality())).add(addressGroup);
-        getAddressGroup(addressGroupsByMunicipalDistrict,
-                toUpperCase(addressGroup.getAddressBase().getMunicipalDistrict())).add(addressGroup);
+        addToMap(addressGroupsByStreet, addressGroup, AddressBase::getStreet);
+        addToMap(addressGroupsByMunicipality, addressGroup, AddressBase::getMunicipality);
+        addToMap(addressGroupsByMunicipalDistrict, addressGroup, AddressBase::getMunicipalDistrict);
+    }
+
+    private void addToMap(Map<String, List<AddressGroup>> map, AddressGroup addressGroup, Function<AddressBase, String> keyExtractor) {
+        String key = toUpperCase(keyExtractor.apply(addressGroup.getAddressBase()));
+        map.computeIfAbsent(key, k -> new ArrayList<>()).add(addressGroup);
     }
 
     private List<AddressGroup> findAddressGroup(Address address) {

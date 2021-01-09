@@ -27,15 +27,6 @@ public class IndexedAddressGroup implements AddressGroup {
         this.addressBase = addressBase;
     }
 
-    private static <K> Set<Address> getAddressSet(Map<K, Set<Address>> addresses, K key) {
-        Set<Address> result = addresses.get(key);
-        if (result == null) {
-            result = new HashSet<>();
-            addresses.put(key, result);
-        }
-        return result;
-    }
-
     public AddressBase getAddressBase() {
         return addressBase;
     }
@@ -43,8 +34,8 @@ public class IndexedAddressGroup implements AddressGroup {
     @Override
     public void addAddress(String orientationNo, Integer houseNo, HouseNoType houseNoType) {
         Address address = new SimpleAddress(addressBase, orientationNo, houseNo, houseNoType);
-        getAddressSet(addressByHouseNo, houseNo).add(address);
-        getAddressSet(addressByOrientationNo, orientationNo).add(address);
+        addressByHouseNo.computeIfAbsent(houseNo, k1 -> new HashSet<>()).add(address);
+        addressByOrientationNo.computeIfAbsent(orientationNo, k -> new HashSet<>()).add(address);
         allAddresses.add(address);
     }
 
