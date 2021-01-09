@@ -1,9 +1,9 @@
 package cz.muni.fi.pv168.addresses;
 
 import cz.muni.fi.pv168.addresses.finder.AddressFinder;
-import cz.muni.fi.pv168.addresses.finder.inmemory.InMemoryAddressFinderFactory;
-import cz.muni.fi.pv168.addresses.finder.inmemory.IndexedAddressGroup;
-import cz.muni.fi.pv168.addresses.finder.inmemory.SimpleAddressGroup;
+import cz.muni.fi.pv168.addresses.finder.indexed.IndexedAddressFinderFactory;
+import cz.muni.fi.pv168.addresses.finder.indexed.IndexedAddressGroup;
+import cz.muni.fi.pv168.addresses.finder.indexed.SimpleAddressGroup;
 import cz.muni.fi.pv168.addresses.loader.mvcr.MVCRDataLoader;
 import cz.muni.fi.pv168.addresses.finder.simple.SimpleAddressFinderFactory;
 import cz.muni.fi.pv168.addresses.time.StopWatch;
@@ -76,10 +76,10 @@ public class Main {
         var addressGroupFactory = indexedAddressGroupFactory;
         //var addressGroupFactory = simpleAddressGroupFactory;
 
-        var inMemoryAddressFinderFactory = new InMemoryAddressFinderFactory(dataLoader, addressGroupFactory);
+        var indexedAddressFinderFactory = new IndexedAddressFinderFactory(dataLoader, addressGroupFactory);
 
         var addressFinderFactory = simpleAddressFinderFactory;
-        //var addressFinderFactory = inMemoryAddressFinderFactory;
+        //var addressFinderFactory = indexedAddressFinderFactory;
 
         return addressFinderFactory.newAddressFinder();
     }

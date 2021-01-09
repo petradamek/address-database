@@ -1,4 +1,4 @@
-package cz.muni.fi.pv168.addresses.finder.inmemory;
+package cz.muni.fi.pv168.addresses.finder.indexed;
 
 import cz.muni.fi.pv168.addresses.Address;
 import cz.muni.fi.pv168.addresses.Address.HouseNoType;
@@ -19,13 +19,13 @@ import java.util.function.Function;
  *
  * Addresses are stored in multiple {@link Map}s to improve search performance.
  */
-final class InMemoryAddressFinder implements AddressFinder {
+final class IndexedAddressFinder implements AddressFinder {
 
     private final Map<String, List<AddressGroup>> addressGroupsByStreet = new HashMap<>();
     private final Map<String, List<AddressGroup>> addressGroupsByMunicipality = new HashMap<>();
     private final Map<String, List<AddressGroup>> addressGroupsByMunicipalDistrict = new HashMap<>();
 
-    InMemoryAddressFinder() {
+    IndexedAddressFinder() {
     }
 //    private Map<String,List<AddressGroup>> addressGroupsByPost = 
 //            new HashMap<String, List<AddressGroup>>();            
