@@ -28,12 +28,12 @@ public class Main {
             String street, String orientationNo,
             String municipality, Integer houseNo) {
 
-        return AddressFactory.newInstance().
-                setMunicipality(municipality).
-                setOrientationNo(orientationNo).
-                setStreet(street).
-                setHouseNo(houseNo).
-                newAddress();
+        return Address.builder()
+                .municipality(municipality)
+                .orientationNo(orientationNo)
+                .street(street)
+                .houseNo(houseNo)
+                .build();
     }
 
     private static List<Address> getInputAddresses() {

@@ -35,71 +35,71 @@ public class AddressToolsTest {
         emptyAddress = emptyAddress();
         assertTrue(AddressTools.match(emptyAddress, emptyAddress));
 
-        source = AddressFactory.newInstance().
-                setMunicipality("Chvalovice").
-                newAddress();
+        source = Address.builder()
+                .municipality("Chvalovice")
+                .build();
 
-        targetChvalovice = AddressFactory.newInstance().
-                setMunicipality("Chvalovice").
-                setMunicipalDistrict("Hatě").
-                setHouseNo(10).
-                setPost("Znojmo 2").
-                setDistrict("Znojmo").
-                setPostCode("669 02").
-                newAddress();
-
-        assertTrue(AddressTools.match(source, targetChvalovice));
-
-        source = AddressFactory.newInstance().
-                setMunicipality("Chvalovice").
-                setHouseNo(10).
-                newAddress();
+        targetChvalovice = Address.builder()
+                .municipality("Chvalovice")
+                .municipalDistrict("Hatě")
+                .houseNo(10)
+                .post("Znojmo 2")
+                .district("Znojmo")
+                .postCode("669 02")
+                .build();
 
         assertTrue(AddressTools.match(source, targetChvalovice));
 
-        source = AddressFactory.newInstance().
-                setMunicipality("Chvalovice").
-                setHouseNo(10).
-                setHouseNoType(HouseNoType.REGISTRATION_NO).
-                newAddress();
+        source = Address.builder()
+                .municipality("Chvalovice")
+                .houseNo(10)
+                .build();
+
+        assertTrue(AddressTools.match(source, targetChvalovice));
+
+        source = Address.builder()
+                .municipality("Chvalovice")
+                .houseNo(10)
+                .houseNoType(HouseNoType.REGISTRATION_NO)
+                .build();
 
         assertFalse(AddressTools.match(source, targetChvalovice));
 
-        source = AddressFactory.newInstance().
-                setMunicipality("Chvalovice").
-                setOrientationNo("10").
-                setHouseNo(10).
-                newAddress();
+        source = Address.builder()
+                .municipality("Chvalovice")
+                .orientationNo("10")
+                .houseNo(10)
+                .build();
 
         assertFalse(AddressTools.match(source, targetChvalovice));
 
-        targetBotanicka = AddressFactory.newInstance().
-                setStreet("Botanická").
-                setHouseNo(554).
-                setOrientationNo("68a").
-                setMunicipality("Brno").
-                setMunicipalDistrict("Ponava").
-                setPostCode("602 00").
-                setDistrict("Brno-město").
-                setPost("Brno 2").
-                newAddress();
+        targetBotanicka = Address.builder()
+                .street("Botanická")
+                .houseNo(554)
+                .orientationNo("68a")
+                .municipality("Brno")
+                .municipalDistrict("Ponava")
+                .postCode("602 00")
+                .district("Brno-město")
+                .post("Brno 2")
+                .build();
 
-        source = AddressFactory.newInstance().
-                setMunicipality("Brno").
-                setOrientationNo("68a").
-                newAddress();
-
-        assertTrue(AddressTools.match(source, targetBotanicka));
-
-        source = AddressFactory.newInstance().
-                setStreet("Botanická").
-                newAddress();
+        source = Address.builder()
+                .municipality("Brno")
+                .orientationNo("68a")
+                .build();
 
         assertTrue(AddressTools.match(source, targetBotanicka));
 
-        source = AddressFactory.newInstance().
-                setStreet("BOTANICKÁ").
-                newAddress();
+        source = Address.builder()
+                .street("Botanická")
+                .build();
+
+        assertTrue(AddressTools.match(source, targetBotanicka));
+
+        source = Address.builder()
+                .street("BOTANICKÁ")
+                .build();
 
         assertTrue(AddressTools.match(source, targetBotanicka));
     }
@@ -127,19 +127,19 @@ public class AddressToolsTest {
         when(address.getOrientationNo()).thenReturn("1a");
         assertFalse(AddressTools.isEmpty(address));
 
-        address = AddressFactory.newInstance().setMunicipalDistrict("X").newAddress();
+        address = Address.builder().municipalDistrict("X").build();
         assertFalse(AddressTools.isEmpty(address));
 
-        address = AddressFactory.newInstance().setMunicipality("X").newAddress();
+        address = Address.builder().municipality("X").build();
         assertFalse(AddressTools.isEmpty(address));
 
-        address = AddressFactory.newInstance().setStreet("X").newAddress();
+        address = Address.builder().street("X").build();
         assertFalse(AddressTools.isEmpty(address));
 
-        address = AddressFactory.newInstance().setPost("X").newAddress();
+        address = Address.builder().post("X").build();
         assertFalse(AddressTools.isEmpty(address));
 
-        address = AddressFactory.newInstance().setPostCode("111 00").newAddress();
+        address = Address.builder().postCode("111 00").build();
         assertFalse(AddressTools.isEmpty(address));
     }
 }

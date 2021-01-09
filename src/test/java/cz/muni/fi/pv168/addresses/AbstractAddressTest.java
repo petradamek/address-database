@@ -14,102 +14,102 @@ public class AbstractAddressTest {
 
         Address address;
 
-        address = AddressFactory.newInstance().
-                setMunicipality("Chvalovice").
-                newAddress();
+        address = Address.builder()
+                .municipality("Chvalovice")
+                .build();
 
         assertEquals("Chvalovice", address.toString());
 
-        address = AddressFactory.newInstance().
-                setMunicipality("Chvalovice").
-                setHouseNo(10).
-                newAddress();
+        address = Address.builder()
+                .municipality("Chvalovice")
+                .houseNo(10)
+                .build();
 
         assertEquals("Chvalovice č.p. 10", address.toString());
 
-        address = AddressFactory.newInstance().
-                setMunicipality("Chvalovice").
-                setHouseNo(10).
-                setHouseNoType(Address.HouseNoType.REGISTRATION_NO).
-                newAddress();
+        address = Address.builder()
+                .municipality("Chvalovice")
+                .houseNo(10)
+                .houseNoType(Address.HouseNoType.REGISTRATION_NO)
+                .build();
 
         assertEquals("Chvalovice ev.č. 10", address.toString());
 
-        address = AddressFactory.newInstance().
-                setMunicipality("Chvalovice").
-                setHouseNo(10).
-                setHouseNoType(Address.HouseNoType.REGISTRATION_NO).
-                setPostCode("602 00").
-                newAddress();
+        address = Address.builder()
+                .municipality("Chvalovice")
+                .houseNo(10)
+                .houseNoType(Address.HouseNoType.REGISTRATION_NO)
+                .postCode("602 00")
+                .build();
 
         assertEquals("Chvalovice ev.č. 10, 602 00", address.toString());
 
-        address = AddressFactory.newInstance().
-                setMunicipality("Chvalovice").
-                setMunicipalDistrict("Hatě").
-                setHouseNo(10).
-                setHouseNoType(Address.HouseNoType.REGISTRATION_NO).
-                newAddress();
+        address = Address.builder()
+                .municipality("Chvalovice")
+                .municipalDistrict("Hatě")
+                .houseNo(10)
+                .houseNoType(Address.HouseNoType.REGISTRATION_NO)
+                .build();
 
         assertEquals("Hatě ev.č. 10, Chvalovice", address.toString());
 
-        address = AddressFactory.newInstance().
-                setMunicipality("Chvalovice").
-                setMunicipalDistrict("Hatě").
-                setHouseNo(10).
-                newAddress();
+        address = Address.builder()
+                .municipality("Chvalovice")
+                .municipalDistrict("Hatě")
+                .houseNo(10)
+                .build();
 
         assertEquals("Hatě č.p. 10, Chvalovice", address.toString());
 
-        address = AddressFactory.newInstance().
-                setMunicipality("Chvalovice").
-                setMunicipalDistrict("Hatě").
-                setPostCode("669 02").
-                setHouseNo(10).
-                newAddress();
+        address = Address.builder()
+                .municipality("Chvalovice")
+                .municipalDistrict("Hatě")
+                .postCode("669 02")
+                .houseNo(10)
+                .build();
 
         assertEquals("Hatě č.p. 10, 669 02 Chvalovice", address.toString());
 
-        address = AddressFactory.newInstance().
-                setMunicipality("Chvalovice").
-                setMunicipalDistrict("Hatě").
-                setPost("Znojmo 2").
-                setHouseNo(10).
-                newAddress();
+        address = Address.builder()
+                .municipality("Chvalovice")
+                .municipalDistrict("Hatě")
+                .post("Znojmo 2")
+                .houseNo(10)
+                .build();
 
         assertEquals("Hatě č.p. 10, Chvalovice, pošta Znojmo 2", address.toString());
 
-        address = AddressFactory.newInstance().
-                setMunicipality("Chvalovice").
-                setMunicipalDistrict("Hatě").
-                setPost("Znojmo 2").
-                setDistrict("Znojmo").
-                setHouseNo(10).
-                newAddress();
+        address = Address.builder()
+                .municipality("Chvalovice")
+                .municipalDistrict("Hatě")
+                .post("Znojmo 2")
+                .district("Znojmo")
+                .houseNo(10)
+                .build();
 
         assertEquals("Hatě č.p. 10, Chvalovice, pošta Znojmo 2, okres Znojmo", address.toString());
 
-        address = AddressFactory.newInstance().
-                setMunicipality("Chvalovice").
-                setMunicipalDistrict("Hatě").
-                setHouseNo(10).
-                setPost("Znojmo 2").
-                setDistrict("Znojmo").
-                setPostCode("669 02").
-                newAddress();
+        address = Address.builder()
+                .municipality("Chvalovice")
+                .municipalDistrict("Hatě")
+                .houseNo(10)
+                .post("Znojmo 2")
+                .district("Znojmo")
+                .postCode("669 02")
+                .build();
 
         assertEquals("Hatě č.p. 10, 669 02 Chvalovice, pošta Znojmo 2, okres Znojmo", address.toString());
 
-        address = AddressFactory.newInstance().
-                setStreet("Botanická").
-                setHouseNo(554).
-                setOrientationNo("68a").
-                setMunicipality("Brno").
-                setMunicipalDistrict("Ponava").
-                setPostCode("602 00").
-                setDistrict("Brno-město").
-                setPost("Brno 2").
-                newAddress();
+        address = Address.builder()
+                .street("Botanická")
+                .houseNo(554)
+                .orientationNo("68a")
+                .municipality("Brno")
+                .municipalDistrict("Ponava")
+                .postCode("602 00")
+                .district("Brno-město")
+                .post("Brno 2")
+                .build();
 
         assertEquals("Botanická 554/68a, 602 00 Brno, Ponava, pošta Brno 2, okres Brno-město", address.toString());
     }

@@ -1,9 +1,7 @@
 package cz.muni.fi.pv168.addresses;
 
 /**
- * This class represents address in Czech Republic
- *
- * @author Petr Adámek
+ * Default implementation of {@link Address}.
  */
 public class SimpleAddress extends AbstractAddress {
 

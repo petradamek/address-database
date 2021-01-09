@@ -7,6 +7,10 @@ package cz.muni.fi.pv168.addresses;
  */
 public interface Address {
 
+    static AddressBuilder builder() {
+        return new AddressBuilder();
+    }
+
     /**
      * Returns street part (<em>ulice</em>) of address.
      *
