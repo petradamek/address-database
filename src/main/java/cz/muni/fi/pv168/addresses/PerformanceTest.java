@@ -30,16 +30,12 @@ final class PerformanceTest {
         double loadingTime = loadingStopWatch.getDurationInMilliseconds();
 
         logger.info("Starting dry run (without measuring time, with printing results)");
-        System.err.println();
-        findAllAddresses(addressFinder, this::printResult);
+        dryRun(addressFinder);
 
         logger.info(String.format("Starting measurement for %d input addresses in %d iterations",
                 addresses.size(), iterationsCount));
-
         var stopWatch = StopWatch.start();
-        for (int i = 0; i < iterationsCount; i++) {
-            findAllAddresses(addressFinder, this::doNotPrintResult);
-        }
+        measurement(addressFinder, iterationsCount);
         double totalTime = stopWatch.getDurationInMilliseconds();
         double oneRecordAvgTime = totalTime / addresses.size() / iterationsCount;
 
@@ -49,6 +45,17 @@ final class PerformanceTest {
 
     private AddressFinder createAddressFinder() throws IOException {
         return addressFinderFactory.newAddressFinder();
+    }
+
+    private void dryRun(AddressFinder addressFinder) {
+        System.err.println();
+        findAllAddresses(addressFinder, this::printResult);
+    }
+
+    private void measurement(AddressFinder addressFinder, int iterationsCount) {
+        for (int i = 0; i < iterationsCount; i++) {
+            findAllAddresses(addressFinder, this::doNotPrintResult);
+        }
     }
 
     private void findAllAddresses(AddressFinder addressFinder, BiConsumer<Address, Collection<Address>> resultConsumer) {
