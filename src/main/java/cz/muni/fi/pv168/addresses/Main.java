@@ -21,7 +21,10 @@ final class Main {
 
     public static void main(String[] args) throws IOException {
 
-        Configuration configuration = Configuration.SIMPLE_FINDER_WITH_FOR_EACH_STRATEGY;
+        Configuration configuration = ConfigurationSelector.selectConfiguration();
+        if (configuration == null) {
+            return;
+        }
 
         var dataLoader = new MvcrDataLoader(Paths.get("adresy.zip"));
         AddressFinderFactory finderFactory = configuration.createAddressFinderFactory(dataLoader);
