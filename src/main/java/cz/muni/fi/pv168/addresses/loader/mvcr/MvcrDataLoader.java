@@ -3,7 +3,6 @@ package cz.muni.fi.pv168.addresses.loader.mvcr;
 import cz.muni.fi.pv168.addresses.loader.AddressHandler;
 import cz.muni.fi.pv168.addresses.loader.DataLoader;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -14,14 +13,14 @@ import java.util.zip.ZipInputStream;
 /**
  * @author Petr Adámek
  */
-public final class MVCRDataLoader implements DataLoader {
+public final class MvcrDataLoader implements DataLoader {
 
     private static final String ADDRESSES_FILE_NAME = "adresy.xml";
 
     private final Path archivePath;
-    private final MVCRAddressParser parser = new MVCRAddressParser();
+    private final MvcrAddressParser parser = new MvcrAddressParser();
 
-    public MVCRDataLoader(Path archivePath) {
+    public MvcrDataLoader(Path archivePath) {
         this.archivePath = Objects.requireNonNull(archivePath, "archivePath is null");
     }
 

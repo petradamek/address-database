@@ -16,9 +16,9 @@ import java.io.InputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-final class MVCRAddressParser {
+final class MvcrAddressParser {
 
-    private static final Logger logger = Logger.getLogger(MVCRAddressParser.class.getName());
+    private static final Logger logger = Logger.getLogger(MvcrAddressParser.class.getName());
 
     void parseDatabase(InputStream addressesXml, AddressHandler addressHandler) throws IOException {
         try {

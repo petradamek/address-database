@@ -4,7 +4,7 @@ import cz.muni.fi.pv168.addresses.finder.AddressFinder;
 import cz.muni.fi.pv168.addresses.finder.indexed.IndexedAddressFinderFactory;
 import cz.muni.fi.pv168.addresses.finder.indexed.IndexedAddressGroup;
 import cz.muni.fi.pv168.addresses.finder.indexed.SimpleAddressGroup;
-import cz.muni.fi.pv168.addresses.loader.mvcr.MVCRDataLoader;
+import cz.muni.fi.pv168.addresses.loader.mvcr.MvcrDataLoader;
 import cz.muni.fi.pv168.addresses.finder.simple.SimpleAddressFinderFactory;
 import cz.muni.fi.pv168.addresses.model.Address;
 import cz.muni.fi.pv168.addresses.time.StopWatch;
@@ -56,7 +56,7 @@ public class Main {
     private static AddressFinder createAddressFinder() throws IOException {
 
         var archivePath = Paths.get("adresy.zip");
-        var dataLoader = new MVCRDataLoader(archivePath);
+        var dataLoader = new MvcrDataLoader(archivePath);
 
         var simpleAddressFinderFactory = new SimpleAddressFinderFactory(dataLoader);
 
