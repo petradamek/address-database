@@ -37,8 +37,6 @@ public class Main {
         //AddressFinder addressFinder = indexedAddressFinderWithIndexedAddressGroups(dataLoader);
         //AddressFinder addressFinder = indexedAddressFinderWithSimpleAddressGroups(dataLoader);
 
-        var stopWatch = StopWatch.start();
-
         List<Address> addresses = List.of(
                 Address.builder().street("Botanická").orientationNo("68a").municipality("Brno").build(),
                 Address.builder().street("Botanická").orientationNo("68a").build(),
@@ -50,6 +48,7 @@ public class Main {
                 Address.builder().municipality("Lhota").houseNo(1, DESCRIPTIVE_NO).build()
         );
 
+        var stopWatch = StopWatch.start();
         System.err.println();
         for (Address address : addresses) {
             Collection<Address> foundAddresses = addressFinder.findAddress(address);
