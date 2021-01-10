@@ -25,7 +25,9 @@ final class PerformanceTest {
 
     void run(int iterationsCount) throws IOException {
 
+        var loadingStopWatch = StopWatch.start();
         AddressFinder addressFinder = createAddressFinder();
+        double loadingTime = loadingStopWatch.getDurationInMilliseconds();
 
         logger.info("Starting dry run (without measuring time, with printing results)");
         System.err.println();
@@ -41,8 +43,8 @@ final class PerformanceTest {
         double totalTime = stopWatch.getDurationInMilliseconds();
         double oneRecordAvgTime = totalTime / addresses.size() / iterationsCount;
 
-        logger.info(String.format("Total time: %,.3f ms, average time per single search: %,.3f ms",
-                totalTime, oneRecordAvgTime));
+        logger.info(String.format("Data loading: %,.3f ms, total search time: %,.3f ms, average time per single search: %,.3f ms",
+                loadingTime, totalTime, oneRecordAvgTime));
     }
 
     private AddressFinder createAddressFinder() throws IOException {
