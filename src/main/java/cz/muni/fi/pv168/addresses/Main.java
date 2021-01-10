@@ -9,7 +9,6 @@ import cz.muni.fi.pv168.addresses.finder.simple.SimpleAddressFinderFactory;
 import cz.muni.fi.pv168.addresses.time.StopWatch;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.logging.Level;
@@ -24,42 +23,28 @@ public class Main {
 
     private static final Logger logger = Logger.getLogger(Main.class.getName());
 
-    private static Address address(
-            String street, String orientationNo,
-            String municipality, Integer houseNo) {
-
-        return Address.builder()
-                .municipality(municipality)
-                .orientationNo(orientationNo)
-                .street(street)
-                .houseNo(houseNo)
-                .build();
-    }
-
-    private static List<Address> getInputAddresses() {
-        return Arrays.asList(
-                address("Botanická", "68a", "Brno", null),
-                address("Botanická", "68a", null, null),
-                address(null, null, "Chvalovice", 33),
-                address(null, null, "Dolní Lhota", 1),
-                address("Jindřišská", "1", null, null),
-                address(null, null, "Lhota", 1)
-        );
-    }
-
     public static void main(String[] args) throws IOException {
 
         AddressFinder addressFinder = createAddressFinder();
 
         var stopWatch = StopWatch.start();
-        final List<Address> inputAddresses = getInputAddresses();
-        for (Address inputAddress : inputAddresses) {
-            System.err.println("Input: " + inputAddress);
-            Collection<Address> out = addressFinder.findAddress(inputAddress);
-            System.err.println("Output: " + out);
+
+        List<Address> addresses = List.of(
+                Address.builder().street("Botanická").orientationNo("68a").municipality("Brno").build(),
+                Address.builder().street("Botanická").orientationNo("68a").build(),
+                Address.builder().municipality("Chvalovice").houseNo(33).build(),
+                Address.builder().municipality("Dolní Lhota").houseNo(1).build(),
+                Address.builder().street("Jindřišská").orientationNo("1").build(),
+                Address.builder().municipality("Lhota").houseNo(1).build()
+        );
+
+        for (Address address : addresses) {
+            System.err.println("Input: " + address);
+            Collection<Address> foundAddresses = addressFinder.findAddress(address);
+            System.err.println("Output: " + foundAddresses);
         }
         double totalTime = stopWatch.getDurationInMilliseconds();
-        double oneRecordAvgTime = totalTime / inputAddresses.size();
+        double oneRecordAvgTime = totalTime / addresses.size();
         logger.log(Level.INFO, String.format("Total time: %,.3f ms, average time for one record: %,.3f ms",
                 totalTime, oneRecordAvgTime));
     }
