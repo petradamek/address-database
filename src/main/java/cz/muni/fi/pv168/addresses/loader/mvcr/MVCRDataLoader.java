@@ -16,6 +16,7 @@ public final class MVCRDataLoader implements DataLoader {
 
     private final String archiveName;
     private final String addressesFileName;
+    private final MVCRAddressParser parser = new MVCRAddressParser();
 
     public MVCRDataLoader(String archiveName, String addressesFileName) {
         this.archiveName = Objects.requireNonNull(archiveName, "archiveName is null");
@@ -36,7 +37,7 @@ public final class MVCRDataLoader implements DataLoader {
                     break;
                 }
             }
-            MVCRAddressParser.parseDatabase(addressHandler, zipInputStream);
+            parser.parseDatabase(zipInputStream, addressHandler);
         }
     }
 }
