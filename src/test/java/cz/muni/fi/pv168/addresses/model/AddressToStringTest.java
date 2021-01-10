@@ -1,81 +1,115 @@
 package cz.muni.fi.pv168.addresses.model;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static cz.muni.fi.pv168.addresses.model.Address.HouseNoType.DESCRIPTIVE_NO;
 import static cz.muni.fi.pv168.addresses.model.Address.HouseNoType.REGISTRATION_NO;
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
-public class AddressToStringTest {
+final class AddressToStringTest {
 
     @Test
-    public void testToString() {
+    void municipality() {
 
-        Address address;
-
-        address = Address.builder()
+        var address = Address.builder()
                 .municipality("Chvalovice")
                 .build();
 
-        assertEquals("Chvalovice", address.toString());
+        assertThat(address.toString())
+                .isEqualTo("Chvalovice");
+    }
 
-        address = Address.builder()
+    @Test
+    void municipalityAndDescriptiveNo() {
+
+        var address = Address.builder()
                 .municipality("Chvalovice")
                 .houseNo(10, DESCRIPTIVE_NO)
                 .build();
 
-        assertEquals("Chvalovice č.p. 10", address.toString());
+        assertThat(address.toString())
+                .isEqualTo("Chvalovice č.p. 10");
+    }
 
-        address = Address.builder()
+    @Test
+    void municipalityAndRegistrationNo() {
+        var address = Address.builder()
                 .municipality("Chvalovice")
                 .houseNo(10, REGISTRATION_NO)
                 .build();
 
-        assertEquals("Chvalovice ev.č. 10", address.toString());
+        assertThat(address.toString())
+                .isEqualTo("Chvalovice ev.č. 10");
+    }
 
-        address = Address.builder()
+    @Test
+    void municipalityAndRegistrationNoAndZip() {
+        var address = Address.builder()
                 .municipality("Chvalovice")
                 .houseNo(10, REGISTRATION_NO)
                 .postCode("602 00")
                 .build();
 
-        assertEquals("Chvalovice ev.č. 10, 602 00", address.toString());
+        assertThat(address.toString())
+                .isEqualTo("Chvalovice ev.č. 10, 602 00");
+    }
 
-        address = Address.builder()
+    @Test
+    void municipalityAndMunicipalityDistrictAndRegistrationNo() {
+        var address = Address.builder()
                 .municipality("Chvalovice")
                 .municipalDistrict("Hatě")
                 .houseNo(10, REGISTRATION_NO)
                 .build();
 
-        assertEquals("Hatě ev.č. 10, Chvalovice", address.toString());
+        assertThat(address.toString())
+                .isEqualTo("Hatě ev.č. 10, Chvalovice");
+    }
 
-        address = Address.builder()
+    @Test
+    void municipalityAndMunicipalityDistrictAndDescriptiveNo() {
+        var address = Address.builder()
                 .municipality("Chvalovice")
                 .municipalDistrict("Hatě")
                 .houseNo(10, DESCRIPTIVE_NO)
                 .build();
 
-        assertEquals("Hatě č.p. 10, Chvalovice", address.toString());
+        assertThat(address.toString())
+                .isEqualTo("Hatě č.p. 10, Chvalovice");
 
-        address = Address.builder()
+    }
+
+    @Test
+    void municipalityAndMunicipalityDistrictAndDescriptiveNoAndZip() {
+        var address = Address.builder()
                 .municipality("Chvalovice")
                 .municipalDistrict("Hatě")
                 .postCode("669 02")
                 .houseNo(10, DESCRIPTIVE_NO)
                 .build();
 
-        assertEquals("Hatě č.p. 10, 669 02 Chvalovice", address.toString());
+        assertThat(address.toString())
+                .isEqualTo("Hatě č.p. 10, 669 02 Chvalovice");
 
-        address = Address.builder()
+    }
+
+    @Test
+    void municipalityAndMunicipalityDistrictAndDescriptiveNoAndPost() {
+        var address = Address.builder()
                 .municipality("Chvalovice")
                 .municipalDistrict("Hatě")
                 .post("Znojmo 2")
                 .houseNo(10, DESCRIPTIVE_NO)
                 .build();
 
-        assertEquals("Hatě č.p. 10, Chvalovice, pošta Znojmo 2", address.toString());
+        assertThat(address.toString())
+                .isEqualTo("Hatě č.p. 10, Chvalovice, pošta Znojmo 2");
 
-        address = Address.builder()
+    }
+
+    @Test
+    void municipalityAndMunicipalityDistrictAndDescriptiveNoAndPostAndPostAndDistrict() {
+        var address = Address.builder()
                 .municipality("Chvalovice")
                 .municipalDistrict("Hatě")
                 .post("Znojmo 2")
@@ -83,9 +117,14 @@ public class AddressToStringTest {
                 .houseNo(10, DESCRIPTIVE_NO)
                 .build();
 
-        assertEquals("Hatě č.p. 10, Chvalovice, pošta Znojmo 2, okres Znojmo", address.toString());
+        assertThat(address.toString())
+                .isEqualTo("Hatě č.p. 10, Chvalovice, pošta Znojmo 2, okres Znojmo");
 
-        address = Address.builder()
+    }
+
+    @Test
+    void fullAddressWithoutStreet() {
+        var address = Address.builder()
                 .municipality("Chvalovice")
                 .municipalDistrict("Hatě")
                 .houseNo(10, DESCRIPTIVE_NO)
@@ -94,9 +133,14 @@ public class AddressToStringTest {
                 .postCode("669 02")
                 .build();
 
-        assertEquals("Hatě č.p. 10, 669 02 Chvalovice, pošta Znojmo 2, okres Znojmo", address.toString());
+        assertThat(address.toString())
+                .isEqualTo("Hatě č.p. 10, 669 02 Chvalovice, pošta Znojmo 2, okres Znojmo");
+    }
 
-        address = Address.builder()
+    @Test
+    void fullAddressWithBothNumbers() {
+
+        var address = Address.builder()
                 .street("Botanická")
                 .houseNo(554, DESCRIPTIVE_NO)
                 .orientationNo("68a")
@@ -107,6 +151,7 @@ public class AddressToStringTest {
                 .post("Brno 2")
                 .build();
 
-        assertEquals("Botanická 554/68a, 602 00 Brno, Ponava, pošta Brno 2, okres Brno-město", address.toString());
+        assertThat(address.toString())
+                .isEqualTo("Botanická 554/68a, 602 00 Brno, Ponava, pošta Brno 2, okres Brno-město");
     }
 }

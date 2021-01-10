@@ -1,16 +1,165 @@
 package cz.muni.fi.pv168.addresses.finder;
 
 import cz.muni.fi.pv168.addresses.model.Address;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static cz.muni.fi.pv168.addresses.model.Address.HouseNoType.DESCRIPTIVE_NO;
 import static cz.muni.fi.pv168.addresses.model.Address.HouseNoType.REGISTRATION_NO;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class AddressMatcherTest {
+final class AddressMatcherTest {
+
+    @Test
+    void emptyToEmpty() {
+        assertThat(AddressMatcher.match(emptyAddress(), emptyAddress()))
+                .isTrue();
+    }
+
+    @Test
+    void municipality() {
+        var source = Address.builder()
+                .municipality("Chvalovice")
+                .build();
+
+        var target = Address.builder()
+                .municipality("Chvalovice")
+                .municipalDistrict("Hatě")
+                .houseNo(10, DESCRIPTIVE_NO)
+                .post("Znojmo 2")
+                .district("Znojmo")
+                .postCode("669 02")
+                .build();
+
+        assertThat(AddressMatcher.match(source, target))
+                .isTrue();
+    }
+
+    @Test
+    void municipalityAndDescriptiveNo() {
+        var source = Address.builder()
+                .municipality("Chvalovice")
+                .houseNo(10, DESCRIPTIVE_NO)
+                .build();
+
+        var target = Address.builder()
+                .municipality("Chvalovice")
+                .municipalDistrict("Hatě")
+                .houseNo(10, DESCRIPTIVE_NO)
+                .post("Znojmo 2")
+                .district("Znojmo")
+                .postCode("669 02")
+                .build();
+
+        assertThat(AddressMatcher.match(source, target))
+                .isTrue();
+    }
+
+    @Test
+    void differentHousNoType() {
+        var source = Address.builder()
+                .municipality("Chvalovice")
+                .houseNo(10, REGISTRATION_NO)
+                .build();
+
+        var target = Address.builder()
+                .municipality("Chvalovice")
+                .municipalDistrict("Hatě")
+                .houseNo(10, DESCRIPTIVE_NO)
+                .post("Znojmo 2")
+                .district("Znojmo")
+                .postCode("669 02")
+                .build();
+
+        assertThat(AddressMatcher.match(source, target))
+                .isFalse();
+    }
+
+    @Test
+    void noOrientationNumberInTarget() {
+        var source = Address.builder()
+                .municipality("Chvalovice")
+                .orientationNo("10")
+                .houseNo(10, DESCRIPTIVE_NO)
+                .build();
+
+        var target = Address.builder()
+                .municipality("Chvalovice")
+                .municipalDistrict("Hatě")
+                .houseNo(10, DESCRIPTIVE_NO)
+                .post("Znojmo 2")
+                .district("Znojmo")
+                .postCode("669 02")
+                .build();
+
+        assertThat(AddressMatcher.match(source, target))
+                .isFalse();
+    }
+
+    @Test
+    void municipalityAndOrientationNo() {
+        var source = Address.builder()
+                .municipality("Brno")
+                .orientationNo("68a")
+                .build();
+
+        var target = Address.builder()
+                .street("Botanická")
+                .houseNo(554, DESCRIPTIVE_NO)
+                .orientationNo("68a")
+                .municipality("Brno")
+                .municipalDistrict("Ponava")
+                .postCode("602 00")
+                .district("Brno-město")
+                .post("Brno 2")
+                .build();
+
+        assertThat(AddressMatcher.match(source, target))
+                .isTrue();
+    }
+
+    @Test
+    void street() {
+        var source = Address.builder()
+                .street("Botanická")
+                .build();
+
+        var target = Address.builder()
+                .street("Botanická")
+                .houseNo(554, DESCRIPTIVE_NO)
+                .orientationNo("68a")
+                .municipality("Brno")
+                .municipalDistrict("Ponava")
+                .postCode("602 00")
+                .district("Brno-město")
+                .post("Brno 2")
+                .build();
+
+        assertThat(AddressMatcher.match(source, target))
+                .isTrue();
+    }
+
+    @Test
+    void streetCaseInsensitive() {
+        var source = Address.builder()
+                .street("BOTANICKÁ")
+                .build();
+
+        var target = Address.builder()
+                .street("Botanická")
+                .houseNo(554, DESCRIPTIVE_NO)
+                .orientationNo("68a")
+                .municipality("Brno")
+                .municipalDistrict("Ponava")
+                .postCode("602 00")
+                .district("Brno-město")
+                .post("Brno 2")
+                .build();
+
+        assertThat(AddressMatcher.match(source, target))
+                .isTrue();
+    }
 
     private Address emptyAddress() {
         Address result = mock(Address.class);
@@ -24,81 +173,5 @@ public class AddressMatcherTest {
         when(result.getPostCode()).thenReturn(null);
         when(result.getStreet()).thenReturn(null);
         return result;
-    }
-
-    @Test
-    public void testMatch() {
-
-        Address source, targetChvalovice, targetBotanicka, emptyAddress;
-
-        emptyAddress = emptyAddress();
-        assertTrue(AddressMatcher.match(emptyAddress, emptyAddress));
-
-        source = Address.builder()
-                .municipality("Chvalovice")
-                .build();
-
-        targetChvalovice = Address.builder()
-                .municipality("Chvalovice")
-                .municipalDistrict("Hatě")
-                .houseNo(10, DESCRIPTIVE_NO)
-                .post("Znojmo 2")
-                .district("Znojmo")
-                .postCode("669 02")
-                .build();
-
-        assertTrue(AddressMatcher.match(source, targetChvalovice));
-
-        source = Address.builder()
-                .municipality("Chvalovice")
-                .houseNo(10, DESCRIPTIVE_NO)
-                .build();
-
-        assertTrue(AddressMatcher.match(source, targetChvalovice));
-
-        source = Address.builder()
-                .municipality("Chvalovice")
-                .houseNo(10, REGISTRATION_NO)
-                .build();
-
-        assertFalse(AddressMatcher.match(source, targetChvalovice));
-
-        source = Address.builder()
-                .municipality("Chvalovice")
-                .orientationNo("10")
-                .houseNo(10, DESCRIPTIVE_NO)
-                .build();
-
-        assertFalse(AddressMatcher.match(source, targetChvalovice));
-
-        targetBotanicka = Address.builder()
-                .street("Botanická")
-                .houseNo(554, DESCRIPTIVE_NO)
-                .orientationNo("68a")
-                .municipality("Brno")
-                .municipalDistrict("Ponava")
-                .postCode("602 00")
-                .district("Brno-město")
-                .post("Brno 2")
-                .build();
-
-        source = Address.builder()
-                .municipality("Brno")
-                .orientationNo("68a")
-                .build();
-
-        assertTrue(AddressMatcher.match(source, targetBotanicka));
-
-        source = Address.builder()
-                .street("Botanická")
-                .build();
-
-        assertTrue(AddressMatcher.match(source, targetBotanicka));
-
-        source = Address.builder()
-                .street("BOTANICKÁ")
-                .build();
-
-        assertTrue(AddressMatcher.match(source, targetBotanicka));
     }
 }
