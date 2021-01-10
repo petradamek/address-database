@@ -22,6 +22,8 @@ import static cz.muni.fi.pv168.addresses.model.Address.HouseNoType.DESCRIPTIVE_N
  */
 final class Main {
 
+    private static final int ITERATIONS_COUNT = 10;
+
     public static void main(String[] args) throws IOException {
 
         var archivePath = Paths.get("adresy.zip");
@@ -43,7 +45,7 @@ final class Main {
         );
 
         var performanceTest = new PerformanceTest(addresses, addressFinder);
-        performanceTest.run();
+        performanceTest.run(ITERATIONS_COUNT);
     }
 
     private static AddressFinder simpleAddressFinder(DataLoader dataLoader) throws IOException {

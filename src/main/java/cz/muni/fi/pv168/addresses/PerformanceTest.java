@@ -22,14 +22,23 @@ final class PerformanceTest {
         this.addressFinder = addressFinder;
     }
 
-    void run() {
-        var stopWatch = StopWatch.start();
+    void run(int iterationsCount) {
+
+        logger.info("Starting dry run (without measuring time, with printing results)");
         System.err.println();
         findAllAddresses(this::printResult);
-        double totalTime = stopWatch.getDurationInMilliseconds();
-        double oneRecordAvgTime = totalTime / addresses.size();
 
-        logger.log(Level.INFO, String.format("Total time: %,.3f ms, average time for one record: %,.3f ms",
+        logger.info(String.format("Starting measurement for %d input addresses in %d iterations",
+                addresses.size(), iterationsCount));
+
+        var stopWatch = StopWatch.start();
+        for (int i = 0; i < iterationsCount; i++) {
+            findAllAddresses(this::doNotPrintResult);
+        }
+        double totalTime = stopWatch.getDurationInMilliseconds();
+        double oneRecordAvgTime = totalTime / addresses.size() / iterationsCount;
+
+        logger.info(String.format("Total time: %,.3f ms, average time per single search: %,.3f ms",
                 totalTime, oneRecordAvgTime));
     }
 
@@ -38,6 +47,9 @@ final class PerformanceTest {
             Collection<Address> foundAddresses = addressFinder.findAddress(address);
             resultConsumer.accept(address, foundAddresses);
         }
+    }
+
+    private void doNotPrintResult(Address address, Collection<Address> foundAddresses) {
     }
 
     private void printResult(Address address, Collection<Address> foundAddresses) {
