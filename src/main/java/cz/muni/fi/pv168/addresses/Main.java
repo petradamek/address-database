@@ -42,10 +42,15 @@ public class Main {
                 Address.builder().municipality("Lhota").houseNo(1, DESCRIPTIVE_NO).build()
         );
 
+        System.err.println();
         for (Address address : addresses) {
-            System.err.println("Input: " + address);
             Collection<Address> foundAddresses = addressFinder.findAddress(address);
-            System.err.println("Output: " + foundAddresses);
+            System.err.printf("Found %d addresses for '%s' %n", foundAddresses.size(), address);
+            int n = 0;
+            for (var foundAddress : foundAddresses) {
+                System.err.printf("   %3d: %s%n", n++, foundAddress);
+            }
+            System.err.println();
         }
         double totalTime = stopWatch.getDurationInMilliseconds();
         double oneRecordAvgTime = totalTime / addresses.size();
