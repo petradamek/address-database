@@ -36,7 +36,9 @@ public class Main {
         List<Address> addresses = List.of(
                 Address.builder().street("Botanická").orientationNo("68a").municipality("Brno").build(),
                 Address.builder().street("Botanická").orientationNo("68a").build(),
+                Address.builder().street("Irkutská").orientationNo("2").build(),
                 Address.builder().municipality("Chvalovice").houseNo(33, DESCRIPTIVE_NO).build(),
+                Address.builder().municipality("Chvalovice").houseNo(33, null).build(),
                 Address.builder().municipality("Dolní Lhota").houseNo(1, DESCRIPTIVE_NO).build(),
                 Address.builder().street("Jindřišská").orientationNo("1").build(),
                 Address.builder().municipality("Lhota").houseNo(1, DESCRIPTIVE_NO).build()
