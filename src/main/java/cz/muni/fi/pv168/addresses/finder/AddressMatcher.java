@@ -43,16 +43,27 @@ public final class AddressMatcher {
                         matchField(sourceHouseNoType, target.getHouseNoType());
     }
 
-    private static boolean matchField(Object source, Object target) {
+    private static boolean matchField(String source, String target) {
         if (source == null) {
             return true;
+        } else {
+            return source.equalsIgnoreCase(target);
         }
-        if (source instanceof CharSequence) {
-            return
-                    target instanceof CharSequence &&
-                            source.toString().equalsIgnoreCase(target.toString());
+    }
+
+    private static boolean matchField(Integer source, Integer target) {
+        if (source == null) {
+            return true;
         } else {
             return source.equals(target);
+        }
+    }
+
+    private static <E extends Enum<E>> boolean matchField(E source, E target) {
+        if (source == null) {
+            return true;
+        } else {
+            return source == target;
         }
     }
 }
