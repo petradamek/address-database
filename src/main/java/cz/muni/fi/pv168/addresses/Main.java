@@ -4,18 +4,14 @@ import cz.muni.fi.pv168.addresses.finder.AddressFinder;
 import cz.muni.fi.pv168.addresses.finder.indexed.IndexedAddressFinderFactory;
 import cz.muni.fi.pv168.addresses.finder.indexed.IndexedAddressGroup;
 import cz.muni.fi.pv168.addresses.finder.indexed.SimpleAddressGroup;
+import cz.muni.fi.pv168.addresses.finder.simple.SimpleAddressFinderFactory;
 import cz.muni.fi.pv168.addresses.loader.DataLoader;
 import cz.muni.fi.pv168.addresses.loader.mvcr.MvcrDataLoader;
-import cz.muni.fi.pv168.addresses.finder.simple.SimpleAddressFinderFactory;
 import cz.muni.fi.pv168.addresses.model.Address;
-import cz.muni.fi.pv168.addresses.time.StopWatch;
 
 import java.io.IOException;
 import java.nio.file.Paths;
-import java.util.Collection;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import static cz.muni.fi.pv168.addresses.model.Address.HouseNoType.DESCRIPTIVE_NO;
 
@@ -24,9 +20,7 @@ import static cz.muni.fi.pv168.addresses.model.Address.HouseNoType.DESCRIPTIVE_N
  *
  * @author petr
  */
-public class Main {
-
-    private static final Logger logger = Logger.getLogger(Main.class.getName());
+final class Main {
 
     public static void main(String[] args) throws IOException {
 
@@ -48,21 +42,8 @@ public class Main {
                 Address.builder().municipality("Lhota").houseNo(1, DESCRIPTIVE_NO).build()
         );
 
-        var stopWatch = StopWatch.start();
-        System.err.println();
-        for (Address address : addresses) {
-            Collection<Address> foundAddresses = addressFinder.findAddress(address);
-            System.err.printf("Found %d addresses for '%s' %n", foundAddresses.size(), address);
-            int n = 0;
-            for (var foundAddress : foundAddresses) {
-                System.err.printf("   %3d: %s%n", n++, foundAddress);
-            }
-            System.err.println();
-        }
-        double totalTime = stopWatch.getDurationInMilliseconds();
-        double oneRecordAvgTime = totalTime / addresses.size();
-        logger.log(Level.INFO, String.format("Total time: %,.3f ms, average time for one record: %,.3f ms",
-                totalTime, oneRecordAvgTime));
+        var performanceTest = new PerformanceTest(addresses, addressFinder);
+        performanceTest.run();
     }
 
     private static AddressFinder simpleAddressFinder(DataLoader dataLoader) throws IOException {
