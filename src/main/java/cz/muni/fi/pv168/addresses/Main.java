@@ -10,6 +10,7 @@ import cz.muni.fi.pv168.addresses.model.Address;
 import cz.muni.fi.pv168.addresses.time.StopWatch;
 
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.Collection;
 import java.util.List;
 import java.util.logging.Level;
@@ -54,7 +55,8 @@ public class Main {
 
     private static AddressFinder createAddressFinder() throws IOException {
 
-        var dataLoader = new MVCRDataLoader("adresy.zip");
+        var archivePath = Paths.get("adresy.zip");
+        var dataLoader = new MVCRDataLoader(archivePath);
 
         var simpleAddressFinderFactory = new SimpleAddressFinderFactory(dataLoader);
 
