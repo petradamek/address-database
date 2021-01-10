@@ -4,7 +4,7 @@ import cz.muni.fi.pv168.addresses.model.Address;
 import cz.muni.fi.pv168.addresses.model.Address.HouseNoType;
 import cz.muni.fi.pv168.addresses.model.AddressBase;
 import cz.muni.fi.pv168.addresses.finder.AddressFinder;
-import cz.muni.fi.pv168.addresses.AddressTools;
+import cz.muni.fi.pv168.addresses.finder.AddressMatcher;
 import cz.muni.fi.pv168.addresses.loader.AddressHandler;
 
 import java.util.ArrayList;
@@ -68,7 +68,7 @@ final class IndexedAddressFinder implements AddressFinder {
         }
         List<AddressGroup> result = new ArrayList<>();
         for (AddressGroup searchedAddressGroup : prefilteredAddressGroup) {
-            if (AddressTools.match(address, searchedAddressGroup.getAddressBase())) {
+            if (AddressMatcher.match(address, searchedAddressGroup.getAddressBase())) {
                 result.add(searchedAddressGroup);
             }
         }

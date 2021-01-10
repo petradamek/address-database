@@ -3,7 +3,7 @@ package cz.muni.fi.pv168.addresses.finder.indexed;
 import cz.muni.fi.pv168.addresses.model.Address;
 import cz.muni.fi.pv168.addresses.model.Address.HouseNoType;
 import cz.muni.fi.pv168.addresses.model.AddressBase;
-import cz.muni.fi.pv168.addresses.AddressTools;
+import cz.muni.fi.pv168.addresses.finder.AddressMatcher;
 import cz.muni.fi.pv168.addresses.model.SimpleAddress;
 
 import java.util.Collection;
@@ -54,7 +54,7 @@ public class IndexedAddressGroup implements AddressGroup {
         }
         Set<Address> result = new HashSet<>();
         for (Address searchedAddress : preFilteredAddresses) {
-            if (AddressTools.matchNumbers(orientationNo, houseNo, houseNoType, searchedAddress)) {
+            if (AddressMatcher.matchNumbers(orientationNo, houseNo, houseNoType, searchedAddress)) {
                 result.add(searchedAddress);
             }
         }

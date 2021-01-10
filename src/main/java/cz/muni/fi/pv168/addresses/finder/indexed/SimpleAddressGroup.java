@@ -4,7 +4,7 @@ import cz.muni.fi.pv168.addresses.model.AbstractAddress;
 import cz.muni.fi.pv168.addresses.model.Address;
 import cz.muni.fi.pv168.addresses.model.Address.HouseNoType;
 import cz.muni.fi.pv168.addresses.model.AddressBase;
-import cz.muni.fi.pv168.addresses.AddressTools;
+import cz.muni.fi.pv168.addresses.finder.AddressMatcher;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -37,7 +37,7 @@ public class SimpleAddressGroup implements AddressGroup {
     public Collection<Address> findAddress(String orientationNo, Integer houseNo, HouseNoType houseNoType) {
         List<Address> result = new ArrayList<>();
         for (Address searchedAddress : addresses) {
-            if (AddressTools.matchNumbers(orientationNo, houseNo, houseNoType, searchedAddress)) {
+            if (AddressMatcher.matchNumbers(orientationNo, houseNo, houseNoType, searchedAddress)) {
                 result.add(searchedAddress);
             }
         }

@@ -2,7 +2,7 @@ package cz.muni.fi.pv168.addresses.finder.simple;
 
 import cz.muni.fi.pv168.addresses.model.Address;
 import cz.muni.fi.pv168.addresses.finder.AddressFinder;
-import cz.muni.fi.pv168.addresses.AddressTools;
+import cz.muni.fi.pv168.addresses.finder.AddressMatcher;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -26,7 +26,7 @@ final class SimpleAddressFinder implements AddressFinder {
     public Collection<Address> findAddress(Address address) {
         List<Address> result = new ArrayList<>();
         for (Address searchedAddress : addresses) {
-            if (AddressTools.match(address, searchedAddress)) {
+            if (AddressMatcher.match(address, searchedAddress)) {
                 result.add(searchedAddress);
             }
         }

@@ -1,24 +1,11 @@
-package cz.muni.fi.pv168.addresses;
+package cz.muni.fi.pv168.addresses.finder;
 
 import cz.muni.fi.pv168.addresses.model.Address;
 import cz.muni.fi.pv168.addresses.model.AddressBase;
 
-/**
- * @author petr
- */
-public abstract class AddressTools {
+public final class AddressMatcher {
 
-    private static boolean matchField(Object source, Object target) {
-        if (source == null) {
-            return true;
-        }
-        if (source instanceof CharSequence) {
-            return
-                    target instanceof CharSequence &&
-                            source.toString().equalsIgnoreCase(target.toString());
-        } else {
-            return source.equals(target);
-        }
+    private AddressMatcher() {
     }
 
     public static boolean match(Address source, Address target) {
@@ -54,5 +41,18 @@ public abstract class AddressTools {
                 matchField(sourceOrientationNo, target.getOrientationNo()) &&
                         matchField(sourceHouseNo, target.getHouseNo()) &&
                         matchField(sourceHouseNoType, target.getHouseNoType());
+    }
+
+    private static boolean matchField(Object source, Object target) {
+        if (source == null) {
+            return true;
+        }
+        if (source instanceof CharSequence) {
+            return
+                    target instanceof CharSequence &&
+                            source.toString().equalsIgnoreCase(target.toString());
+        } else {
+            return source.equals(target);
+        }
     }
 }

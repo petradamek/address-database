@@ -1,4 +1,4 @@
-package cz.muni.fi.pv168.addresses;
+package cz.muni.fi.pv168.addresses.finder;
 
 import cz.muni.fi.pv168.addresses.model.Address;
 import org.junit.Test;
@@ -10,10 +10,7 @@ import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-/**
- * @author petr
- */
-public class AddressToolsTest {
+public class AddressMatcherTest {
 
     private Address emptyAddress() {
         Address result = mock(Address.class);
@@ -35,7 +32,7 @@ public class AddressToolsTest {
         Address source, targetChvalovice, targetBotanicka, emptyAddress;
 
         emptyAddress = emptyAddress();
-        assertTrue(AddressTools.match(emptyAddress, emptyAddress));
+        assertTrue(AddressMatcher.match(emptyAddress, emptyAddress));
 
         source = Address.builder()
                 .municipality("Chvalovice")
@@ -50,21 +47,21 @@ public class AddressToolsTest {
                 .postCode("669 02")
                 .build();
 
-        assertTrue(AddressTools.match(source, targetChvalovice));
+        assertTrue(AddressMatcher.match(source, targetChvalovice));
 
         source = Address.builder()
                 .municipality("Chvalovice")
                 .houseNo(10, DESCRIPTIVE_NO)
                 .build();
 
-        assertTrue(AddressTools.match(source, targetChvalovice));
+        assertTrue(AddressMatcher.match(source, targetChvalovice));
 
         source = Address.builder()
                 .municipality("Chvalovice")
                 .houseNo(10, REGISTRATION_NO)
                 .build();
 
-        assertFalse(AddressTools.match(source, targetChvalovice));
+        assertFalse(AddressMatcher.match(source, targetChvalovice));
 
         source = Address.builder()
                 .municipality("Chvalovice")
@@ -72,7 +69,7 @@ public class AddressToolsTest {
                 .houseNo(10, DESCRIPTIVE_NO)
                 .build();
 
-        assertFalse(AddressTools.match(source, targetChvalovice));
+        assertFalse(AddressMatcher.match(source, targetChvalovice));
 
         targetBotanicka = Address.builder()
                 .street("Botanická")
@@ -90,18 +87,18 @@ public class AddressToolsTest {
                 .orientationNo("68a")
                 .build();
 
-        assertTrue(AddressTools.match(source, targetBotanicka));
+        assertTrue(AddressMatcher.match(source, targetBotanicka));
 
         source = Address.builder()
                 .street("Botanická")
                 .build();
 
-        assertTrue(AddressTools.match(source, targetBotanicka));
+        assertTrue(AddressMatcher.match(source, targetBotanicka));
 
         source = Address.builder()
                 .street("BOTANICKÁ")
                 .build();
 
-        assertTrue(AddressTools.match(source, targetBotanicka));
+        assertTrue(AddressMatcher.match(source, targetBotanicka));
     }
 }
