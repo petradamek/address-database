@@ -54,7 +54,7 @@ public class Main {
 
     private static AddressFinder createAddressFinder() throws IOException {
 
-        var dataLoader = new MVCRDataLoader("adresy.zip", "adresy.xml");
+        var dataLoader = new MVCRDataLoader("adresy.zip");
 
         var simpleAddressFinderFactory = new SimpleAddressFinderFactory(dataLoader);
 

@@ -14,13 +14,13 @@ import java.util.zip.ZipInputStream;
  */
 public final class MVCRDataLoader implements DataLoader {
 
+    private static final String ADDRESSES_FILE_NAME = "adresy.xml";
+
     private final String archiveName;
-    private final String addressesFileName;
     private final MVCRAddressParser parser = new MVCRAddressParser();
 
-    public MVCRDataLoader(String archiveName, String addressesFileName) {
+    public MVCRDataLoader(String archiveName) {
         this.archiveName = Objects.requireNonNull(archiveName, "archiveName is null");
-        this.addressesFileName = Objects.requireNonNull(addressesFileName, "addressesFileName is null");
     }
 
     @Override
@@ -30,10 +30,10 @@ public final class MVCRDataLoader implements DataLoader {
             for (; ; ) {
                 ZipEntry zipEntry = zipInputStream.getNextEntry();
                 if (zipEntry == null) {
-                    throw new IOException("Addresses file '" + addressesFileName
+                    throw new IOException("Addresses file '" + ADDRESSES_FILE_NAME
                             + "' not found in archive " + archiveName);
                 }
-                if (zipEntry.getName().equals(addressesFileName)) {
+                if (zipEntry.getName().equals(ADDRESSES_FILE_NAME)) {
                     break;
                 }
             }
