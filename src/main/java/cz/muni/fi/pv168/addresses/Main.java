@@ -4,6 +4,7 @@ import cz.muni.fi.pv168.addresses.finder.AddressFinder;
 import cz.muni.fi.pv168.addresses.finder.indexed.IndexedAddressFinderFactory;
 import cz.muni.fi.pv168.addresses.finder.indexed.IndexedAddressGroup;
 import cz.muni.fi.pv168.addresses.finder.indexed.SimpleAddressGroup;
+import cz.muni.fi.pv168.addresses.loader.DataLoader;
 import cz.muni.fi.pv168.addresses.loader.mvcr.MvcrDataLoader;
 import cz.muni.fi.pv168.addresses.finder.simple.SimpleAddressFinderFactory;
 import cz.muni.fi.pv168.addresses.model.Address;
@@ -29,7 +30,12 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
 
-        AddressFinder addressFinder = createAddressFinder();
+        var archivePath = Paths.get("adresy.zip");
+        var dataLoader = new MvcrDataLoader(archivePath);
+
+        AddressFinder addressFinder = simpleAddressFinder(dataLoader);
+        //AddressFinder addressFinder = indexedAddressFinderWithIndexedAddressGroups(dataLoader);
+        //AddressFinder addressFinder = indexedAddressFinderWithSimpleAddressGroups(dataLoader);
 
         var stopWatch = StopWatch.start();
 
@@ -60,24 +66,20 @@ public class Main {
                 totalTime, oneRecordAvgTime));
     }
 
-    private static AddressFinder createAddressFinder() throws IOException {
+    private static AddressFinder simpleAddressFinder(DataLoader dataLoader) throws IOException {
+        var factory = new SimpleAddressFinderFactory(dataLoader);
+        return factory.newAddressFinder();
+    }
 
-        var archivePath = Paths.get("adresy.zip");
-        var dataLoader = new MvcrDataLoader(archivePath);
+    private static AddressFinder indexedAddressFinderWithIndexedAddressGroups(DataLoader dataLoader) throws IOException {
+        var addressGroupFactory = new IndexedAddressGroup.Factory();
+        var factory = new IndexedAddressFinderFactory(dataLoader, addressGroupFactory);
+        return factory.newAddressFinder();
+    }
 
-        var simpleAddressFinderFactory = new SimpleAddressFinderFactory(dataLoader);
-
-        var simpleAddressGroupFactory = new SimpleAddressGroup.Factory();
-        var indexedAddressGroupFactory = new IndexedAddressGroup.Factory();
-
-        var addressGroupFactory = indexedAddressGroupFactory;
-        //var addressGroupFactory = simpleAddressGroupFactory;
-
-        var indexedAddressFinderFactory = new IndexedAddressFinderFactory(dataLoader, addressGroupFactory);
-
-        var addressFinderFactory = simpleAddressFinderFactory;
-        //var addressFinderFactory = indexedAddressFinderFactory;
-
-        return addressFinderFactory.newAddressFinder();
+    private static AddressFinder indexedAddressFinderWithSimpleAddressGroups(DataLoader dataLoader) throws IOException {
+        var addressGroupFactory = new SimpleAddressGroup.Factory();
+        var factory = new IndexedAddressFinderFactory(dataLoader, addressGroupFactory);
+        return factory.newAddressFinder();
     }
 }
