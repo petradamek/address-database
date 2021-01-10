@@ -3,6 +3,8 @@ package cz.muni.fi.pv168.addresses;
 import cz.muni.fi.pv168.addresses.Address.HouseNoType;
 import org.junit.Test;
 
+import static cz.muni.fi.pv168.addresses.Address.HouseNoType.DESCRIPTIVE_NO;
+import static cz.muni.fi.pv168.addresses.Address.HouseNoType.REGISTRATION_NO;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
@@ -42,7 +44,7 @@ public class AddressToolsTest {
         targetChvalovice = Address.builder()
                 .municipality("Chvalovice")
                 .municipalDistrict("Hatě")
-                .houseNo(10)
+                .houseNo(10, DESCRIPTIVE_NO)
                 .post("Znojmo 2")
                 .district("Znojmo")
                 .postCode("669 02")
@@ -52,15 +54,14 @@ public class AddressToolsTest {
 
         source = Address.builder()
                 .municipality("Chvalovice")
-                .houseNo(10)
+                .houseNo(10, DESCRIPTIVE_NO)
                 .build();
 
         assertTrue(AddressTools.match(source, targetChvalovice));
 
         source = Address.builder()
                 .municipality("Chvalovice")
-                .houseNo(10)
-                .houseNoType(HouseNoType.REGISTRATION_NO)
+                .houseNo(10, REGISTRATION_NO)
                 .build();
 
         assertFalse(AddressTools.match(source, targetChvalovice));
@@ -68,14 +69,14 @@ public class AddressToolsTest {
         source = Address.builder()
                 .municipality("Chvalovice")
                 .orientationNo("10")
-                .houseNo(10)
+                .houseNo(10, DESCRIPTIVE_NO)
                 .build();
 
         assertFalse(AddressTools.match(source, targetChvalovice));
 
         targetBotanicka = Address.builder()
                 .street("Botanická")
-                .houseNo(554)
+                .houseNo(554, DESCRIPTIVE_NO)
                 .orientationNo("68a")
                 .municipality("Brno")
                 .municipalDistrict("Ponava")
@@ -120,7 +121,7 @@ public class AddressToolsTest {
         assertFalse(AddressTools.isEmpty(address));
 
         address = emptyAddress();
-        when(address.getHouseNoType()).thenReturn(HouseNoType.DESCRIPTIVE_NO);
+        when(address.getHouseNoType()).thenReturn(DESCRIPTIVE_NO);
         assertFalse(AddressTools.isEmpty(address));
 
         address = emptyAddress();

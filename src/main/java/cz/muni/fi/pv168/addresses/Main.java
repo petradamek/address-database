@@ -14,6 +14,8 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import static cz.muni.fi.pv168.addresses.Address.HouseNoType.DESCRIPTIVE_NO;
+
 /**
  * Aplikace ignoruje městské části a PSČ jednotlivých ulic.
  *
@@ -32,10 +34,10 @@ public class Main {
         List<Address> addresses = List.of(
                 Address.builder().street("Botanická").orientationNo("68a").municipality("Brno").build(),
                 Address.builder().street("Botanická").orientationNo("68a").build(),
-                Address.builder().municipality("Chvalovice").houseNo(33).build(),
-                Address.builder().municipality("Dolní Lhota").houseNo(1).build(),
+                Address.builder().municipality("Chvalovice").houseNo(33, DESCRIPTIVE_NO).build(),
+                Address.builder().municipality("Dolní Lhota").houseNo(1, DESCRIPTIVE_NO).build(),
                 Address.builder().street("Jindřišská").orientationNo("1").build(),
-                Address.builder().municipality("Lhota").houseNo(1).build()
+                Address.builder().municipality("Lhota").houseNo(1, DESCRIPTIVE_NO).build()
         );
 
         for (Address address : addresses) {

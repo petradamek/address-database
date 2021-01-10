@@ -25,18 +25,9 @@ public class AddressBuilder {
         return this;
     }
 
-    public AddressBuilder houseNo(Integer houseNo) {
+    public AddressBuilder houseNo(Integer houseNo, Address.HouseNoType type) {
         this.houseNo = houseNo;
-        if (houseNo == null) {
-            houseNoType = null;
-        } else if (houseNoType == null) {
-            houseNoType = Address.HouseNoType.DESCRIPTIVE_NO;
-        }
-        return this;
-    }
-
-    public AddressBuilder houseNoType(Address.HouseNoType houseNoType) {
-        this.houseNoType = houseNoType;
+        this.houseNoType = type;
         return this;
     }
 
