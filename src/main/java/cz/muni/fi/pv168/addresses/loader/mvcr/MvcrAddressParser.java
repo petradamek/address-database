@@ -22,9 +22,13 @@ final class MvcrAddressParser {
 
     void parseDatabase(InputStream addressesXml, AddressHandler addressHandler) throws IOException {
         try {
+            var stopWatch = StopWatch.start();
             SAXParserFactory factory = SAXParserFactory.newInstance();
             SAXParser parser = factory.newSAXParser();
-            parser.parse(addressesXml, new Handler(addressHandler));
+            Handler handler = new Handler(addressHandler);
+            parser.parse(addressesXml, handler);
+            logger.log(Level.INFO, String.format("Loading data done, loaded %,d addresses, took %,.3f ms",
+                    handler.count, stopWatch.getDurationInMilliseconds()));
         } catch (ParserConfigurationException ex) {
             throw new RuntimeException("Error when initializing xml parser", ex);
         } catch (SAXException ex) {
@@ -36,7 +40,6 @@ final class MvcrAddressParser {
 
         private final AddressHandler addressHandler;
         private final AddressBaseBuilder addressBaseBuilder = new AddressBaseBuilder();
-        private StopWatch stopWatch;
         private long count;
 
         private Handler(AddressHandler addressHandler) {
@@ -48,7 +51,6 @@ final class MvcrAddressParser {
             switch (qName) {
                 case "adresy":
                     logger.log(Level.INFO, "Loading data, version is {0}", attributes.getValue("stav_k"));
-                    stopWatch = StopWatch.start();
                     break;
                 case "oblast":
                     addressBaseBuilder.district(attributes.getValue("okres"));
@@ -98,10 +100,6 @@ final class MvcrAddressParser {
         @Override
         public void endElement(String uri, String localName, String qName) {
             switch (qName) {
-                case "adresy":
-                    logger.log(Level.INFO, String.format("Loading data done, loaded %,d addresses, took %,.3f ms",
-                            count, stopWatch.getDurationInMilliseconds()));
-                    break;
                 case "oblast":
                     addressBaseBuilder.district(null);
                     break;
