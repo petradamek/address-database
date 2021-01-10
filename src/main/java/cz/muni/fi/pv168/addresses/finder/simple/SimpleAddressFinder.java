@@ -1,35 +1,30 @@
 package cz.muni.fi.pv168.addresses.finder.simple;
 
-import cz.muni.fi.pv168.addresses.model.Address;
 import cz.muni.fi.pv168.addresses.finder.AddressFinder;
-import cz.muni.fi.pv168.addresses.finder.AddressMatcher;
+import cz.muni.fi.pv168.addresses.model.Address;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 /**
  * Very simple {@link AddressFinder} implementation, which stores addresses in {@link List}.
  *
- * There is no optimization for improving search performance. {@link #findAddress(Address)}
- * has to iterate over all the addresses every time.
+ * Does not use optimized data structure for improving search performance. {@link #findAddress(Address)}
+ * has to iterate over all the addresses every time. The concrete way of traversing the addresses
+ * (e.g. single-threaded or multi-threaded) is defined by {@link SearchStrategy}.
  */
 final class SimpleAddressFinder implements AddressFinder {
 
     private final List<Address> addresses;
+    private final SearchStrategy searchStrategy;
 
-    SimpleAddressFinder(List<Address> addresses) {
+    SimpleAddressFinder(List<Address> addresses, SearchStrategy searchStrategy) {
         this.addresses = addresses;
+        this.searchStrategy = searchStrategy;
     }
 
     @Override
     public Collection<Address> findAddress(Address address) {
-        List<Address> result = new ArrayList<>();
-        for (Address searchedAddress : addresses) {
-            if (AddressMatcher.match(address, searchedAddress)) {
-                result.add(searchedAddress);
-            }
-        }
-        return result;
+        return searchStrategy.findAddress(addresses, address);
     }
 }

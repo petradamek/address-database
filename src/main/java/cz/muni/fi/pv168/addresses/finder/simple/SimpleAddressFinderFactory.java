@@ -18,15 +18,18 @@ import java.util.List;
  */
 public final class SimpleAddressFinderFactory extends AddressFinderFactory {
 
-    public SimpleAddressFinderFactory(DataLoader dataLoader) {
+    private final SearchStrategy searchStrategy;
+
+    public SimpleAddressFinderFactory(DataLoader dataLoader, SearchStrategy searchStrategy) {
         super(dataLoader);
+        this.searchStrategy = searchStrategy;
     }
 
     @Override
     public AddressFinder newAddressFinder() throws IOException {
         AddressHandlerImpl addressHandler = new AddressHandlerImpl();
         getDataLoader().loadData(addressHandler);
-        return new SimpleAddressFinder(addressHandler.addresses);
+        return new SimpleAddressFinder(addressHandler.addresses, searchStrategy);
     }
 
     private static class AddressHandlerImpl implements AddressHandler {
