@@ -55,17 +55,4 @@ public abstract class AddressTools {
                         matchField(sourceHouseNo, target.getHouseNo()) &&
                         matchField(sourceHouseNoType, target.getHouseNoType());
     }
-
-    public static boolean isEmpty(Address source) {
-        return
-                source.getStreet() == null &&
-                        source.getOrientationNo() == null &&
-                        source.getHouseNo() == null &&
-                        source.getHouseNoType() == null &&
-                        source.getMunicipality() == null &&
-                        source.getMunicipalDistrict() == null &&
-                        source.getDistrict() == null &&
-                        source.getPost() == null &&
-                        source.getPostCode() == null;
-    }
 }

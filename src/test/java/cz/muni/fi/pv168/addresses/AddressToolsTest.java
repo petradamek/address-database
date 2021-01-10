@@ -104,43 +104,4 @@ public class AddressToolsTest {
 
         assertTrue(AddressTools.match(source, targetBotanicka));
     }
-
-    @Test
-    public void testIsEmpty() {
-
-        Address address;
-
-        address = emptyAddress();
-        assertTrue(AddressTools.isEmpty(address));
-
-//        address = AddressFactory.newInstance().setDistrict("X").newAddress();
-//        assertFalse(AddressTools.isEmpty(address));        
-
-        address = emptyAddress();
-        when(address.getHouseNo()).thenReturn(1);
-        assertFalse(AddressTools.isEmpty(address));
-
-        address = emptyAddress();
-        when(address.getHouseNoType()).thenReturn(DESCRIPTIVE_NO);
-        assertFalse(AddressTools.isEmpty(address));
-
-        address = emptyAddress();
-        when(address.getOrientationNo()).thenReturn("1a");
-        assertFalse(AddressTools.isEmpty(address));
-
-        address = Address.builder().municipalDistrict("X").build();
-        assertFalse(AddressTools.isEmpty(address));
-
-        address = Address.builder().municipality("X").build();
-        assertFalse(AddressTools.isEmpty(address));
-
-        address = Address.builder().street("X").build();
-        assertFalse(AddressTools.isEmpty(address));
-
-        address = Address.builder().post("X").build();
-        assertFalse(AddressTools.isEmpty(address));
-
-        address = Address.builder().postCode("111 00").build();
-        assertFalse(AddressTools.isEmpty(address));
-    }
 }
