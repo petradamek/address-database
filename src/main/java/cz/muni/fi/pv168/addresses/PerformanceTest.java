@@ -1,13 +1,14 @@
 package cz.muni.fi.pv168.addresses;
 
 import cz.muni.fi.pv168.addresses.finder.AddressFinder;
+import cz.muni.fi.pv168.addresses.finder.AddressFinderFactory;
 import cz.muni.fi.pv168.addresses.model.Address;
 import cz.muni.fi.pv168.addresses.time.StopWatch;
 
+import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 import java.util.function.BiConsumer;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 final class PerformanceTest {
@@ -15,25 +16,27 @@ final class PerformanceTest {
     private static final Logger logger = Logger.getLogger(Main.class.getName());
 
     private final Collection<Address> addresses;
-    private final AddressFinder addressFinder;
+    private final AddressFinderFactory addressFinderFactory;
 
-    PerformanceTest(List<Address> addresses, AddressFinder addressFinder) {
+    PerformanceTest(List<Address> addresses, AddressFinderFactory addressFinderFactory) {
         this.addresses = addresses;
-        this.addressFinder = addressFinder;
+        this.addressFinderFactory = addressFinderFactory;
     }
 
-    void run(int iterationsCount) {
+    void run(int iterationsCount) throws IOException {
+
+        AddressFinder addressFinder = createAddressFinder();
 
         logger.info("Starting dry run (without measuring time, with printing results)");
         System.err.println();
-        findAllAddresses(this::printResult);
+        findAllAddresses(addressFinder, this::printResult);
 
         logger.info(String.format("Starting measurement for %d input addresses in %d iterations",
                 addresses.size(), iterationsCount));
 
         var stopWatch = StopWatch.start();
         for (int i = 0; i < iterationsCount; i++) {
-            findAllAddresses(this::doNotPrintResult);
+            findAllAddresses(addressFinder, this::doNotPrintResult);
         }
         double totalTime = stopWatch.getDurationInMilliseconds();
         double oneRecordAvgTime = totalTime / addresses.size() / iterationsCount;
@@ -42,7 +45,11 @@ final class PerformanceTest {
                 totalTime, oneRecordAvgTime));
     }
 
-    private void findAllAddresses(BiConsumer<Address, Collection<Address>> resultConsumer) {
+    private AddressFinder createAddressFinder() throws IOException {
+        return addressFinderFactory.newAddressFinder();
+    }
+
+    private void findAllAddresses(AddressFinder addressFinder, BiConsumer<Address, Collection<Address>> resultConsumer) {
         for (Address address : addresses) {
             Collection<Address> foundAddresses = addressFinder.findAddress(address);
             resultConsumer.accept(address, foundAddresses);

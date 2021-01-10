@@ -1,6 +1,6 @@
 package cz.muni.fi.pv168.addresses;
 
-import cz.muni.fi.pv168.addresses.finder.AddressFinder;
+import cz.muni.fi.pv168.addresses.finder.AddressFinderFactory;
 import cz.muni.fi.pv168.addresses.loader.mvcr.MvcrDataLoader;
 import cz.muni.fi.pv168.addresses.model.Address;
 
@@ -23,12 +23,8 @@ final class Main {
 
         Configuration configuration = Configuration.SIMPLE_FINDER;
 
-        var archivePath = Paths.get("adresy.zip");
-        var dataLoader = new MvcrDataLoader(archivePath);
-
-        AddressFinder addressFinder = configuration
-                .createAddressFinderFactory(dataLoader)
-                .newAddressFinder();
+        var dataLoader = new MvcrDataLoader(Paths.get("adresy.zip"));
+        AddressFinderFactory finderFactory = configuration.createAddressFinderFactory(dataLoader);
 
         List<Address> addresses = List.of(
                 Address.builder().street("Botanická").orientationNo("68a").municipality("Brno").build(),
@@ -41,7 +37,7 @@ final class Main {
                 Address.builder().municipality("Lhota").houseNo(1, DESCRIPTIVE_NO).build()
         );
 
-        var performanceTest = new PerformanceTest(addresses, addressFinder);
+        var performanceTest = new PerformanceTest(addresses, finderFactory);
         performanceTest.run(ITERATIONS_COUNT);
     }
 }
