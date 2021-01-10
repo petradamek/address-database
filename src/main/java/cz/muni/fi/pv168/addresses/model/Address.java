@@ -1,4 +1,4 @@
-package cz.muni.fi.pv168.addresses;
+package cz.muni.fi.pv168.addresses.model;
 
 /**
  * This interface represents address in Czech Republic.

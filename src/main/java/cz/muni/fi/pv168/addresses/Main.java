@@ -6,6 +6,7 @@ import cz.muni.fi.pv168.addresses.finder.indexed.IndexedAddressGroup;
 import cz.muni.fi.pv168.addresses.finder.indexed.SimpleAddressGroup;
 import cz.muni.fi.pv168.addresses.loader.mvcr.MVCRDataLoader;
 import cz.muni.fi.pv168.addresses.finder.simple.SimpleAddressFinderFactory;
+import cz.muni.fi.pv168.addresses.model.Address;
 import cz.muni.fi.pv168.addresses.time.StopWatch;
 
 import java.io.IOException;
@@ -14,7 +15,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static cz.muni.fi.pv168.addresses.Address.HouseNoType.DESCRIPTIVE_NO;
+import static cz.muni.fi.pv168.addresses.model.Address.HouseNoType.DESCRIPTIVE_NO;
 
 /**
  * Aplikace ignoruje městské části a PSČ jednotlivých ulic.

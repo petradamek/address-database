@@ -1,5 +1,8 @@
 package cz.muni.fi.pv168.addresses;
 
+import cz.muni.fi.pv168.addresses.model.Address;
+import cz.muni.fi.pv168.addresses.model.AddressBase;
+
 /**
  * @author petr
  */

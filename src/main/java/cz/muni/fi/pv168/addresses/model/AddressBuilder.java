@@ -1,4 +1,4 @@
-package cz.muni.fi.pv168.addresses;
+package cz.muni.fi.pv168.addresses.model;
 
 /**
  * Builder for {@link Address}.

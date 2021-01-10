@@ -1,9 +1,9 @@
-package cz.muni.fi.pv168.addresses;
+package cz.muni.fi.pv168.addresses.model;
 
 import org.junit.Test;
 
-import static cz.muni.fi.pv168.addresses.Address.HouseNoType.DESCRIPTIVE_NO;
-import static cz.muni.fi.pv168.addresses.Address.HouseNoType.REGISTRATION_NO;
+import static cz.muni.fi.pv168.addresses.model.Address.HouseNoType.DESCRIPTIVE_NO;
+import static cz.muni.fi.pv168.addresses.model.Address.HouseNoType.REGISTRATION_NO;
 import static org.junit.Assert.assertEquals;
 
 /**

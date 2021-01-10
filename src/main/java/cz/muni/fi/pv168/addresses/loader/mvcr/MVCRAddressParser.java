@@ -1,8 +1,8 @@
 package cz.muni.fi.pv168.addresses.loader.mvcr;
 
-import cz.muni.fi.pv168.addresses.Address;
-import cz.muni.fi.pv168.addresses.AddressBase;
-import cz.muni.fi.pv168.addresses.AddressBaseFactory;
+import cz.muni.fi.pv168.addresses.model.Address;
+import cz.muni.fi.pv168.addresses.model.AddressBase;
+import cz.muni.fi.pv168.addresses.model.AddressBaseFactory;
 import cz.muni.fi.pv168.addresses.loader.AddressHandler;
 import cz.muni.fi.pv168.addresses.time.StopWatch;
 import org.xml.sax.Attributes;

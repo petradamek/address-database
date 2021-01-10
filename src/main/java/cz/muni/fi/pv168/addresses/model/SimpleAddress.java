@@ -1,4 +1,4 @@
-package cz.muni.fi.pv168.addresses;
+package cz.muni.fi.pv168.addresses.model;
 
 /**
  * Default implementation of {@link Address}.
@@ -15,7 +15,7 @@ public class SimpleAddress extends AbstractAddress {
     private final String postCode;
     private final String post;
 
-    public SimpleAddress(
+    SimpleAddress(
             String street,
             String orientationNo,
             Integer houseNo,
