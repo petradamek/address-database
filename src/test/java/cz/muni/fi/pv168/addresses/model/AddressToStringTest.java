@@ -6,10 +6,7 @@ import static cz.muni.fi.pv168.addresses.model.Address.HouseNoType.DESCRIPTIVE_N
 import static cz.muni.fi.pv168.addresses.model.Address.HouseNoType.REGISTRATION_NO;
 import static org.junit.Assert.assertEquals;
 
-/**
- * @author petr
- */
-public class AbstractAddressTest {
+public class AddressToStringTest {
 
     @Test
     public void testToString() {
