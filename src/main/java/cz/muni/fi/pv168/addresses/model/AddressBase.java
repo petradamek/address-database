@@ -1,7 +1,10 @@
 package cz.muni.fi.pv168.addresses.model;
 
 /**
- * @author petr
+ * {@code AddressBase} contains all parts of {@link Address} down to the street.
+ *
+ * House number ({@link Address#getHouseNo()} and {@link Address#getHouseNoType()})
+ * and orientation number ({@link Address#getOrientationNo()}) are excluded.
  */
 public class AddressBase {
 
