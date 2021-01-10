@@ -39,8 +39,11 @@ final class PerformanceTest {
         double totalTime = stopWatch.getDurationInMilliseconds();
         double oneRecordAvgTime = totalTime / addresses.size() / iterationsCount;
 
-        logger.info(String.format("Data loading: %,.3f ms, total search time: %,.3f ms, average time per single search: %,.3f ms",
-                loadingTime, totalTime, oneRecordAvgTime));
+        var runtime = Runtime.getRuntime();
+        long heapSizeInMiB = runtime.totalMemory() / (1024 * 1024);
+        logger.info(String.format("Data loading: %,.3f ms, total search time: %,.3f ms," +
+                        " average time per single search: %,.3f ms. Current heap size is %,d MiB, CPU count is %d.",
+                loadingTime, totalTime, oneRecordAvgTime, heapSizeInMiB, runtime.availableProcessors()));
     }
 
     private AddressFinder createAddressFinder() throws IOException {
