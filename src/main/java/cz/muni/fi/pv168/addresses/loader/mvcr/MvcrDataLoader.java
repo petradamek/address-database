@@ -11,7 +11,7 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 /**
- * @author Petr Adámek
+ * {@link DataLoader} for loading addresses in format provided by the Czech Ministry of Interior.
  */
 public final class MvcrDataLoader implements DataLoader {
 
