@@ -154,4 +154,40 @@ final class AddressToStringTest {
         assertThat(address.toString())
                 .isEqualTo("Botanická 554/68a, 602 00 Brno, Ponava, pošta Brno 2, okres Brno-město");
     }
+
+    @Test
+    void missingNumberType() {
+        var address = Address.builder()
+                .municipality("Brno")
+                .houseNo(10, null)
+                .build();
+
+        assertThat(address.toString())
+                .isEqualTo("Brno č. 10");
+    }
+
+    @Test
+    void missingNumberTypeWithStreet() {
+        var address = Address.builder()
+                .municipality("Brno")
+                .street("Botanická")
+                .houseNo(10, null)
+                .build();
+
+        assertThat(address.toString())
+                .isEqualTo("Botanická č. 10, Brno");
+    }
+
+    @Test
+    void missingNumberTypeWithOrientationNumber() {
+        var address = Address.builder()
+                .municipality("Brno")
+                .street("Botanická")
+                .houseNo(10, null)
+                .orientationNo("2b")
+                .build();
+
+        assertThat(address.toString())
+                .isEqualTo("Botanická č. 10/2b, Brno");
+    }
 }

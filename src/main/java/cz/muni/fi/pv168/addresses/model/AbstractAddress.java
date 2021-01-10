@@ -51,6 +51,8 @@ public abstract class AbstractAddress implements Address {
         if (getHouseNo() != null) {
             if (getHouseNoType() == HouseNoType.REGISTRATION_NO) {
                 builder.append("ev.č. ");
+            } else if (getHouseNoType() == null) {
+                builder.append("č. ");
             } else if (getOrientationNo() == null) {
                 builder.append("č.p. ");
             }
