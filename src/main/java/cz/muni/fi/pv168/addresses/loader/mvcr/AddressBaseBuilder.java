@@ -1,11 +1,11 @@
-package cz.muni.fi.pv168.addresses.model;
+package cz.muni.fi.pv168.addresses.loader.mvcr;
+
+import cz.muni.fi.pv168.addresses.model.AddressBase;
 
 /**
  * This class is not thread safe!
- *
- * @author petr
  */
-public class AddressBaseFactory {
+final class AddressBaseBuilder {
 
     private String street;
     private Integer streetCode;
@@ -19,63 +19,55 @@ public class AddressBaseFactory {
 
     private AddressBase addressBase;
 
-    private AddressBaseFactory() {
+    AddressBaseBuilder() {
     }
 
-    public static AddressBaseFactory newInstance() {
-        return new AddressBaseFactory();
-    }
-
-    private void invalidate() {
-        addressBase = null;
-    }
-
-    public void setDistrict(String district) {
+    void district(String district) {
         invalidate();
         this.district = district;
     }
 
-    public void setMunicipalDistrict(String municipalDistrict) {
+    void municipalDistrict(String municipalDistrict) {
         invalidate();
         this.municipalDistrict = municipalDistrict;
     }
 
-    public void setMunicipalDistrictCode(Integer municipalDistrictCode) {
+    void municipalDistrictCode(Integer municipalDistrictCode) {
         invalidate();
         this.municipalDistrictCode = municipalDistrictCode;
     }
 
-    public void setMunicipality(String municipality) {
+    void municipality(String municipality) {
         invalidate();
         this.municipality = municipality;
     }
 
-    public void setMunicipalityCode(Integer municipalityCode) {
+    void municipalityCode(Integer municipalityCode) {
         invalidate();
         this.municipalityCode = municipalityCode;
     }
 
-    public void setPost(String post) {
+    void post(String post) {
         invalidate();
         this.post = post;
     }
 
-    public void setPostCode(String postCode) {
+    void postCode(String postCode) {
         invalidate();
         this.postCode = postCode;
     }
 
-    public void setStreet(String street) {
+    void street(String street) {
         invalidate();
         this.street = street;
     }
 
-    public void setStreetCode(Integer streetCode) {
+    void streetCode(Integer streetCode) {
         invalidate();
         this.streetCode = streetCode;
     }
 
-    public AddressBase newAddressBase() {
+    AddressBase build() {
         if (addressBase == null) {
             addressBase = new AddressBase(
                     street, streetCode,
@@ -85,5 +77,9 @@ public class AddressBaseFactory {
                     postCode, post);
         }
         return addressBase;
+    }
+
+    private void invalidate() {
+        addressBase = null;
     }
 }

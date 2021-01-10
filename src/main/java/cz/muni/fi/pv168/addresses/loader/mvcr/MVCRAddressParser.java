@@ -2,7 +2,6 @@ package cz.muni.fi.pv168.addresses.loader.mvcr;
 
 import cz.muni.fi.pv168.addresses.model.Address;
 import cz.muni.fi.pv168.addresses.model.AddressBase;
-import cz.muni.fi.pv168.addresses.model.AddressBaseFactory;
 import cz.muni.fi.pv168.addresses.loader.AddressHandler;
 import cz.muni.fi.pv168.addresses.time.StopWatch;
 import org.xml.sax.Attributes;
@@ -25,7 +24,7 @@ public class MVCRAddressParser extends DefaultHandler {
     static final Logger logger = Logger.getLogger(MVCRAddressParser.class.getName());
 
     private final AddressHandler addressHandler;
-    private final AddressBaseFactory addressBaseFactory = AddressBaseFactory.newInstance();
+    private final AddressBaseBuilder addressBaseBuilder = new AddressBaseBuilder();
     private StopWatch stopWatch;
     private long count;
 
@@ -54,19 +53,19 @@ public class MVCRAddressParser extends DefaultHandler {
                         count, stopWatch.getDurationInMilliseconds()));
                 break;
             case "oblast":
-                addressBaseFactory.setDistrict(null);
+                addressBaseBuilder.district(null);
                 break;
             case "obec":
-                addressBaseFactory.setMunicipality(null);
-                addressBaseFactory.setMunicipalityCode(null);
+                addressBaseBuilder.municipality(null);
+                addressBaseBuilder.municipalityCode(null);
                 break;
             case "cast":
-                addressBaseFactory.setMunicipalDistrict(null);
-                addressBaseFactory.setMunicipalDistrictCode(null);
+                addressBaseBuilder.municipalDistrict(null);
+                addressBaseBuilder.municipalDistrictCode(null);
                 break;
             case "ulice":
-                addressBaseFactory.setStreet(null);
-                addressBaseFactory.setStreetCode(null);
+                addressBaseBuilder.street(null);
+                addressBaseBuilder.streetCode(null);
                 break;
         }
     }
@@ -98,22 +97,22 @@ public class MVCRAddressParser extends DefaultHandler {
                 stopWatch = StopWatch.start();
                 break;
             case "oblast":
-                addressBaseFactory.setDistrict(attributes.getValue("okres"));
+                addressBaseBuilder.district(attributes.getValue("okres"));
                 break;
             case "obec":
-                addressBaseFactory.setMunicipality(attributes.getValue("nazev"));
-                addressBaseFactory.setMunicipalityCode(parseCode(attributes));
+                addressBaseBuilder.municipality(attributes.getValue("nazev"));
+                addressBaseBuilder.municipalityCode(parseCode(attributes));
                 break;
             case "cast":
-                addressBaseFactory.setMunicipalDistrict(attributes.getValue("nazev"));
-                addressBaseFactory.setMunicipalDistrictCode(parseCode(attributes));
+                addressBaseBuilder.municipalDistrict(attributes.getValue("nazev"));
+                addressBaseBuilder.municipalDistrictCode(parseCode(attributes));
                 break;
             case "ulice":
-                addressBaseFactory.setStreet(attributes.getValue("nazev"));
-                addressBaseFactory.setStreetCode(parseCode(attributes));
+                addressBaseBuilder.street(attributes.getValue("nazev"));
+                addressBaseBuilder.streetCode(parseCode(attributes));
                 break;
             case "a":
-                AddressBase addressBase = addressBaseFactory.newAddressBase();
+                AddressBase addressBase = addressBaseBuilder.build();
                 String orientationNumber = attributes.getValue("o");
                 String registrationNumber = attributes.getValue("e");
                 String descritptiveNumber = attributes.getValue("p");
