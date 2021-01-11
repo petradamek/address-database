@@ -64,7 +64,7 @@ final class IndexedAddressFinder implements AddressFinder {
         } else if (address.getMunicipalDistrict() != null) {
             prefilteredAddressGroup = addressGroupsByMunicipalDistrict.get(toUpperCase(address.getMunicipalDistrict()));
         } else {
-            throw new IllegalArgumentException("At least street or municipal or municipalDistrict must be specified");
+            throw new IllegalArgumentException("At least street or municipality or municipalDistrict must be specified");
         }
         List<AddressGroup> result = new ArrayList<>();
         for (AddressGroup searchedAddressGroup : prefilteredAddressGroup) {

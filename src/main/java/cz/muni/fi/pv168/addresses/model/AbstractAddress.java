@@ -42,7 +42,7 @@ public abstract class AbstractAddress implements Address {
                 getStreet() == null &&
                 getPost() == null &&
                 getPostCode() == null) {
-            throw new IllegalArgumentException("At least municiality, street, "
+            throw new IllegalArgumentException("At least municipality, street, "
                     + "post or postCode must be filled to create address");
         }
     }
