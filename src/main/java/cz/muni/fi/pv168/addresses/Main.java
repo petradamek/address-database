@@ -11,11 +11,6 @@ import java.util.logging.Logger;
 
 import static cz.muni.fi.pv168.addresses.model.Address.HouseNoType.DESCRIPTIVE_NO;
 
-/**
- * Aplikace ignoruje městské části a PSČ jednotlivých ulic.
- *
- * @author petr
- */
 final class Main {
 
     private static final Logger logger = Logger.getLogger(Main.class.getName());
