@@ -1,9 +1,9 @@
 package cz.muni.fi.pv168.addresses.finder.indexed;
 
+import cz.muni.fi.pv168.addresses.finder.AddressMatcher;
 import cz.muni.fi.pv168.addresses.model.Address;
 import cz.muni.fi.pv168.addresses.model.Address.HouseNoType;
 import cz.muni.fi.pv168.addresses.model.AddressBase;
-import cz.muni.fi.pv168.addresses.finder.AddressMatcher;
 import cz.muni.fi.pv168.addresses.model.SimpleAddress;
 
 import java.util.Collection;
@@ -37,7 +37,7 @@ public class IndexedAddressGroup implements AddressGroup {
     public void addAddress(String orientationNo, Integer houseNo, HouseNoType houseNoType) {
         Address address = new SimpleAddress(addressBase, orientationNo, houseNo, houseNoType);
         addressByHouseNo.computeIfAbsent(houseNo, k1 -> new HashSet<>()).add(address);
-        addressByOrientationNo.computeIfAbsent(orientationNo, k -> new HashSet<>()).add(address);
+        addressByOrientationNo.computeIfAbsent(toUpperCase(orientationNo), k -> new HashSet<>()).add(address);
         allAddresses.add(address);
     }
 
@@ -47,7 +47,7 @@ public class IndexedAddressGroup implements AddressGroup {
         if (houseNo != null) {
             preFilteredAddresses = addressByHouseNo.get(houseNo);
         } else if (orientationNo != null) {
-            preFilteredAddresses = addressByOrientationNo.get(orientationNo);
+            preFilteredAddresses = addressByOrientationNo.get(toUpperCase(orientationNo));
         } else {
             preFilteredAddresses = allAddresses;
         }
@@ -61,6 +61,14 @@ public class IndexedAddressGroup implements AddressGroup {
             }
         }
         return result;
+    }
+
+    private String toUpperCase(String s) {
+        if (s == null) {
+            return null;
+        } else {
+            return s.toUpperCase();
+        }
     }
 
     public static class Factory implements AddressGroupFactory {

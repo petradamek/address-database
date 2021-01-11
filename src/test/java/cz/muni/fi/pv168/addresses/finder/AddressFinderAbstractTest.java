@@ -308,6 +308,20 @@ public abstract class AddressFinderAbstractTest {
                         BOTANICKA_68A_BRNO);
     }
 
+    @Test
+    void findByStreetAndOrientationNumber() {
+        var finder = newAddressFinder(ALL_ADDRESSES);
+        var address = Address.builder()
+                .street("botanická")
+                .orientationNo("68a")
+                .build();
+
+        assertThat(finder.findAddress(address))
+                .usingFieldByFieldElementComparator()
+                .containsExactlyInAnyOrder(
+                        BOTANICKA_68A_BRNO);
+    }
+
     private AddressFinder newAddressFinder(List<Address> addresses) {
         var factory = newAddressFinderFactory(handler -> loadData(addresses, handler));
         try {
