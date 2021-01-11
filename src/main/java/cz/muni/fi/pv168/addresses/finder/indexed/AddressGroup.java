@@ -6,7 +6,9 @@ import cz.muni.fi.pv168.addresses.model.AddressBase;
 import java.util.Collection;
 
 /**
- * @author Petr Adámek
+ * Stores group of addresses with the same {@link AddressBase}.
+ *
+ * Different implementations could use different data structures for storing data to improve performance.
  */
 interface AddressGroup {
 

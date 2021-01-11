@@ -14,7 +14,9 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * @author Petr Adámek
+ * Optimized implementation of {@link AddressGroup}.
+ * Stores addresses in Maps, {@link #findAddress(String, Integer, HouseNoType)}
+ * operation is done as fast map lookup.
  */
 public class IndexedAddressGroup implements AddressGroup {
 

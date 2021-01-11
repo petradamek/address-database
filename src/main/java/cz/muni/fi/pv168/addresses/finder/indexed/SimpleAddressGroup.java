@@ -11,7 +11,9 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * @author Petr Adámek
+ * Unoptimized implementation of {@link AddressGroup}.
+ * Stores addresses in simple list, {@link #findAddress(String, Integer, HouseNoType)}
+ * operation is done sequentially by traversing all addresses in the group.
  */
 public class SimpleAddressGroup implements AddressGroup {
 
