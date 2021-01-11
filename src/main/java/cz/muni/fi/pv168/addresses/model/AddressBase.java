@@ -36,6 +36,20 @@ public class AddressBase {
         this.post = post;
     }
 
+    public static AddressBase ofAddress(Address address) {
+        return new AddressBase(
+                address.getStreet(),
+                null,
+                address.getMunicipality(),
+                null,
+                address.getMunicipalDistrict(),
+                null,
+                address.getDistrict(),
+                address.getPostCode(),
+                address.getPost()
+        );
+    }
+
     private static int integerToInt(Integer i) {
         return i == null ? -1 : i.intValue();
     }
