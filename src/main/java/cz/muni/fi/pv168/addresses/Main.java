@@ -18,7 +18,7 @@ final class Main {
     private static final int ITERATIONS_COUNT = 10;
 
     public static void main(String[] args) throws IOException {
-
+        initLogFormat();
         Configuration configuration = ConfigurationSelector.selectConfiguration();
         if (configuration == null) {
             logger.warning("No configuration selected, exiting...");
@@ -43,5 +43,9 @@ final class Main {
         var performanceTest = new PerformanceTest(addresses, finderFactory);
         performanceTest.run(ITERATIONS_COUNT);
         logger.info(String.format("Selected configuration was %s: %s", configuration.name(), configuration));
+    }
+
+    private static void initLogFormat() {
+        System.setProperty("java.util.logging.SimpleFormatter.format", "%1$tT [%4$-7s] %5$s %n");
     }
 }
