@@ -20,7 +20,7 @@ public abstract class AbstractLoadingStrategy implements LoadingStrategy {
         this.loadingStateHandler = loadingStateHandler;
     }
 
-    protected void handleError(IOException ex) {
+    protected void handleError(Throwable ex) {
         logger.log(Level.SEVERE, "Error when loading data", ex);
         JOptionPane.showMessageDialog(null, ex.toString(), "Error when loading data",
                 JOptionPane.ERROR_MESSAGE);

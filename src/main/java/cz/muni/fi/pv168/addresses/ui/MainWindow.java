@@ -5,6 +5,7 @@ import cz.muni.fi.pv168.addresses.loader.DataLoaderFactory;
 import cz.muni.fi.pv168.addresses.model.Address;
 import cz.muni.fi.pv168.addresses.ui.action.QuitAction;
 import cz.muni.fi.pv168.addresses.ui.action.ReloadAction;
+import cz.muni.fi.pv168.addresses.ui.loading.AsynchronousLoadingStrategy;
 import cz.muni.fi.pv168.addresses.ui.loading.LoadingStrategy;
 import cz.muni.fi.pv168.addresses.ui.loading.SynchronousLoadingStrategy;
 import cz.muni.fi.pv168.addresses.ui.model.AddressesTableModel;
@@ -33,7 +34,7 @@ public class MainWindow {
     private final LoadingStrategy loadingStrategy;
 
     public MainWindow(DataLoader dataLoader) {
-        this.loadingStrategy = new SynchronousLoadingStrategy(dataLoader, this::updateLoadingState);
+        this.loadingStrategy = new AsynchronousLoadingStrategy(dataLoader, this::updateLoadingState);
         this.frame = createFrame();
         var addressTable = new JTable(addressesTableModel);
         addressTable.setDefaultRenderer(Address.HouseNoType.class, new HouseNoTypeRenderer());
