@@ -7,6 +7,7 @@ import cz.muni.fi.pv168.addresses.ui.action.QuitAction;
 import cz.muni.fi.pv168.addresses.ui.action.ReloadAction;
 import cz.muni.fi.pv168.addresses.ui.model.AddressesTableModel;
 import cz.muni.fi.pv168.addresses.ui.model.ReadOnlyEntityTableModel;
+import cz.muni.fi.pv168.addresses.ui.renderer.HouseNoTypeRenderer;
 
 import javax.swing.Action;
 import javax.swing.JFrame;
@@ -35,6 +36,7 @@ public class MainWindow {
         this.dataLoader = dataLoader;
         this.frame = createFrame();
         var addressTable = new JTable(addressesTableModel);
+        addressTable.setDefaultRenderer(Address.HouseNoType.class, new HouseNoTypeRenderer());
         frame.add(new JScrollPane(addressTable), BorderLayout.CENTER);
         frame.add(createToolbar(), BorderLayout.BEFORE_FIRST_LINE);
         frame.setJMenuBar(createMenuBar());
