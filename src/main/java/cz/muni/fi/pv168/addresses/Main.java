@@ -1,11 +1,10 @@
 package cz.muni.fi.pv168.addresses;
 
 import cz.muni.fi.pv168.addresses.finder.AddressFinderFactory;
-import cz.muni.fi.pv168.addresses.loader.mvcr.MvcrDataLoader;
+import cz.muni.fi.pv168.addresses.loader.DataLoaderFactory;
 import cz.muni.fi.pv168.addresses.model.Address;
 
 import java.io.IOException;
-import java.nio.file.Paths;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -26,7 +25,7 @@ final class Main {
         }
         logger.info(String.format("Selected configuration %s: %s", configuration.name(), configuration));
 
-        var dataLoader = new MvcrDataLoader(Paths.get("adresy.zip"));
+        var dataLoader = DataLoaderFactory.newDataLoader();
         AddressFinderFactory finderFactory = configuration.createAddressFinderFactory(dataLoader);
 
         List<Address> addresses = List.of(
