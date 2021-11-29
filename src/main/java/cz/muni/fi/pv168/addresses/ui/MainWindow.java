@@ -33,7 +33,7 @@ public class MainWindow {
     private final LoadingStrategy loadingStrategy;
 
     public MainWindow(DataLoader dataLoader) {
-        this.loadingStrategy = new SynchronousLoadingStrategy(dataLoader);
+        this.loadingStrategy = new SynchronousLoadingStrategy(dataLoader, this::updateLoadingState);
         this.frame = createFrame();
         var addressTable = new JTable(addressesTableModel);
         addressTable.setDefaultRenderer(Address.HouseNoType.class, new HouseNoTypeRenderer());
@@ -54,6 +54,10 @@ public class MainWindow {
 
     private void reloadAddresses() {
         loadingStrategy.loadAllData(addressesTableModel);
+    }
+
+    private void updateLoadingState(boolean loading) {
+        reloadAction.setEnabled(!loading);
     }
 
     private JFrame createFrame() {
