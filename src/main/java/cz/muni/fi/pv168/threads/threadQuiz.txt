@@ -1,0 +1,45 @@
+Thread Quiz
+===========
+
+Task #1
+-------
+* Is the code thread-safe?
+  Yes/No
+
+* Is the scope of the synchronization appropriate?
+  Yes/No
+
+* Why not?
+
+
+Task #2
+-------
+* Is the code thread-safe?
+  Yes/No
+
+* Is the scope of the synchronization appropriate?
+  Yes/No
+
+* Why not?
+
+
+Task #3
+-------
+* Is the code thread-safe?
+  Yes/No
+
+* Is the scope of the synchronization appropriate?
+  Yes/No
+
+* Why not?
+
+
+Task #4
+-------
+* Is the code thread-safe?
+  Yes/No
+
+* Is the scope of the synchronization appropriate?
+  Yes/No
+
+* Why not?
