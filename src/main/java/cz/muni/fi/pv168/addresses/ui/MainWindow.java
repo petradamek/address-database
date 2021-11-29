@@ -5,6 +5,8 @@ import cz.muni.fi.pv168.addresses.loader.DataLoaderFactory;
 import cz.muni.fi.pv168.addresses.model.Address;
 import cz.muni.fi.pv168.addresses.ui.action.QuitAction;
 import cz.muni.fi.pv168.addresses.ui.action.ReloadAction;
+import cz.muni.fi.pv168.addresses.ui.loading.LoadingStrategy;
+import cz.muni.fi.pv168.addresses.ui.loading.SynchronousLoadingStrategy;
 import cz.muni.fi.pv168.addresses.ui.model.AddressesTableModel;
 import cz.muni.fi.pv168.addresses.ui.model.ReadOnlyEntityTableModel;
 import cz.muni.fi.pv168.addresses.ui.renderer.HouseNoTypeRenderer;
@@ -19,8 +21,6 @@ import javax.swing.JToolBar;
 import javax.swing.WindowConstants;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
-import java.io.IOException;
-import java.io.UncheckedIOException;
 
 public class MainWindow {
 
@@ -30,10 +30,10 @@ public class MainWindow {
     private final Action reloadAction = new ReloadAction(this::reloadAddresses);
 
     private final ReadOnlyEntityTableModel<Address> addressesTableModel = new AddressesTableModel();
-    private final DataLoader dataLoader;
+    private final LoadingStrategy loadingStrategy;
 
     public MainWindow(DataLoader dataLoader) {
-        this.dataLoader = dataLoader;
+        this.loadingStrategy = new SynchronousLoadingStrategy(dataLoader);
         this.frame = createFrame();
         var addressTable = new JTable(addressesTableModel);
         addressTable.setDefaultRenderer(Address.HouseNoType.class, new HouseNoTypeRenderer());
@@ -53,11 +53,7 @@ public class MainWindow {
     }
 
     private void reloadAddresses() {
-        try {
-            addressesTableModel.setRows(dataLoader.loadData());
-        } catch (IOException e) {
-            throw new UncheckedIOException(e);
-        }
+        loadingStrategy.loadAllData(addressesTableModel);
     }
 
     private JFrame createFrame() {
