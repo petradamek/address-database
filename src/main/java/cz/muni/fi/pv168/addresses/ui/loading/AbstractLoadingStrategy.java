@@ -4,11 +4,12 @@ import cz.muni.fi.pv168.addresses.loader.DataLoader;
 
 import javax.swing.JOptionPane;
 import java.io.IOException;
-import java.io.UncheckedIOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public abstract class AbstractLoadingStrategy implements LoadingStrategy {
+
+    private static final Logger logger = Logger.getLogger(AbstractLoadingStrategy.class.getName());
 
     protected final DataLoader dataLoader;
 
@@ -17,7 +18,9 @@ public abstract class AbstractLoadingStrategy implements LoadingStrategy {
     }
 
     protected void handleError(IOException ex) {
-        throw new UncheckedIOException(ex);
+        logger.log(Level.SEVERE, "Error when loading data", ex);
+        JOptionPane.showMessageDialog(null, ex.toString(), "Error when loading data",
+                JOptionPane.ERROR_MESSAGE);
     }
 
 }
