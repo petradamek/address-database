@@ -28,17 +28,25 @@ public class AsynchronousLoadingStrategy extends AbstractLoadingStrategy {
 
             @Override
             protected List<Address> doInBackground() throws IOException {
+                // This method is executed in background thread
                 return dataLoader.loadData();
             }
 
             @Override
             protected void done() {
+                // this method is executed in EDT when the doInBackground() method is finished,
+                // either successfully or with exception
                 try {
                     var addresses = get();
                     addressTableModel.setRows(addresses);
                 } catch (InterruptedException e) {
+                    // InterruptedException is thrown by get() method when this thread was interrupted while waiting
+                    // until the doInBackground() is finished. It should never happen in this case, because done()
+                    // method is called after the doInBackground() is finished
                     throw new AssertionError(e);
                 } catch (ExecutionException e) {
+                    // this means that some exception has been thrown in doInBackground()
+                    // such exception is set as a cause of the ExecutionException
                     handleError(e.getCause());
                 } finally {
                     // Does this even work?
