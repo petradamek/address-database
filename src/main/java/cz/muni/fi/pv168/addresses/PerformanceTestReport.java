@@ -1,10 +1,13 @@
 package cz.muni.fi.pv168.addresses;
 
+import cz.muni.fi.pv168.addresses.finder.AddressFinder;
+
 import java.util.stream.Collectors;
 
 class PerformanceTestReport {
 
     private final String configurationDescription;
+    private final AddressFinder addressFinder;
     private final double loadingTime;
     private final double totalTime;
     private final double oneRecordAvgTime;
@@ -13,6 +16,7 @@ class PerformanceTestReport {
 
     PerformanceTestReport(
             String configurationDescription,
+            AddressFinder addressFinder,
             double loadingTime,
             double totalTime,
             double oneRecordAvgTime,
@@ -20,6 +24,7 @@ class PerformanceTestReport {
             int availableProcessors) {
 
         this.configurationDescription = configurationDescription;
+        this.addressFinder = addressFinder;
         this.loadingTime = loadingTime;
         this.totalTime = totalTime;
         this.oneRecordAvgTime = oneRecordAvgTime;
@@ -31,6 +36,10 @@ class PerformanceTestReport {
         return str.codePoints().mapToObj(c -> c > 127 || "\"'<>&".indexOf(c) != -1 ?
                 "&#" + c + ";" : new String(Character.toChars(c)))
                 .collect(Collectors.joining());
+    }
+
+    public AddressFinder getAddressFinder() {
+        return addressFinder;
     }
 
     @Override

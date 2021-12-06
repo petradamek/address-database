@@ -45,8 +45,8 @@ final class PerformanceTest {
         var runtime = Runtime.getRuntime();
         long heapSizeInMiB = runtime.totalMemory() / (1024 * 1024);
 
-        PerformanceTestReport report = new PerformanceTestReport(
-                configurationDescription, loadingTime, totalTime, oneRecordAvgTime, heapSizeInMiB, runtime.availableProcessors());
+        PerformanceTestReport report = new PerformanceTestReport(configurationDescription, addressFinder,
+                loadingTime, totalTime, oneRecordAvgTime, heapSizeInMiB, runtime.availableProcessors());
         logger.log(Level.INFO, "Performance test finished\n{0}", report);
         return report;
     }

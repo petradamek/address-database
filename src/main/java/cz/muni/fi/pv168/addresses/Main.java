@@ -1,5 +1,6 @@
 package cz.muni.fi.pv168.addresses;
 
+import cz.muni.fi.pv168.addresses.finder.AddressFinder;
 import cz.muni.fi.pv168.addresses.finder.AddressFinderFactory;
 import cz.muni.fi.pv168.addresses.loader.DataLoaderFactory;
 import cz.muni.fi.pv168.addresses.model.Address;
@@ -43,6 +44,16 @@ final class Main {
         var performanceTest = new PerformanceTest(addresses, finderFactory, configuration.toString());
         var report = performanceTest.run(ITERATIONS_COUNT);
         ReportDialog.show(report);
+
+        ensureThatAddressFinderWasNotGarbageCollected(report.getAddressFinder());
+    }
+
+    private static void ensureThatAddressFinderWasNotGarbageCollected(AddressFinder addressFinder) {
+        if (addressFinder == null) {
+            // this should never happen, this condition is here just to ensure that the AddressFinder is
+            // not released from the memory too early (before students can check its memory consumption)
+            throw new AssertionError("AddressFinder is null");
+        }
     }
 
     private static void initLogFormat() {
