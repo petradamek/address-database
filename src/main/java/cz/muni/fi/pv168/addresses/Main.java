@@ -5,6 +5,7 @@ import cz.muni.fi.pv168.addresses.loader.DataLoaderFactory;
 import cz.muni.fi.pv168.addresses.model.Address;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -39,9 +40,9 @@ final class Main {
                 Address.builder().municipality("Lhota").houseNo(1, DESCRIPTIVE_NO).build()
         );
 
-        var performanceTest = new PerformanceTest(addresses, finderFactory);
-        performanceTest.run(ITERATIONS_COUNT);
-        logger.info(String.format("Selected configuration was %s: %s", configuration.name(), configuration));
+        var performanceTest = new PerformanceTest(addresses, finderFactory, configuration.toString());
+        var report = performanceTest.run(ITERATIONS_COUNT);
+        ReportDialog.show(report);
     }
 
     private static void initLogFormat() {

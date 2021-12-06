@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 import java.util.function.BiConsumer;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 final class PerformanceTest {
@@ -17,13 +18,15 @@ final class PerformanceTest {
 
     private final Collection<Address> addresses;
     private final AddressFinderFactory addressFinderFactory;
+    private final String configurationDescription;
 
-    PerformanceTest(List<Address> addresses, AddressFinderFactory addressFinderFactory) {
+    PerformanceTest(List<Address> addresses, AddressFinderFactory addressFinderFactory, String configurationDescription) {
         this.addresses = addresses;
         this.addressFinderFactory = addressFinderFactory;
+        this.configurationDescription = configurationDescription;
     }
 
-    void run(int iterationsCount) throws IOException {
+    PerformanceTestReport run(int iterationsCount) throws IOException {
 
         var loadingStopWatch = StopWatch.start();
         AddressFinder addressFinder = createAddressFinder();
@@ -41,9 +44,11 @@ final class PerformanceTest {
 
         var runtime = Runtime.getRuntime();
         long heapSizeInMiB = runtime.totalMemory() / (1024 * 1024);
-        logger.info(String.format("Data loading: %,.3f ms, total search time: %,.3f ms," +
-                        " average time per single search: %,.3f ms. Current heap size is %,d MiB, CPU count is %d.",
-                loadingTime, totalTime, oneRecordAvgTime, heapSizeInMiB, runtime.availableProcessors()));
+
+        PerformanceTestReport report = new PerformanceTestReport(
+                configurationDescription, loadingTime, totalTime, oneRecordAvgTime, heapSizeInMiB, runtime.availableProcessors());
+        logger.log(Level.INFO, "Performance test finished\n{0}", report);
+        return report;
     }
 
     private AddressFinder createAddressFinder() throws IOException {
