@@ -20,10 +20,17 @@ final class Main {
 
     public static void main(String[] args) throws IOException {
         initLogFormat();
+        while(true) {
+            runPerformanceTest();
+            System.gc();
+        }
+    }
+
+    private static void runPerformanceTest() throws IOException {
         Configuration configuration = ConfigurationSelector.selectConfiguration();
         if (configuration == null) {
             logger.warning("No configuration selected, exiting...");
-            return;
+            System.exit(0);
         }
         logger.info(String.format("Selected configuration %s: %s", configuration.name(), configuration));
 
