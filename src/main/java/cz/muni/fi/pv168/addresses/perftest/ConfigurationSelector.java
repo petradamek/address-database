@@ -1,4 +1,4 @@
-package cz.muni.fi.pv168.addresses;
+package cz.muni.fi.pv168.addresses.perftest;
 
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;

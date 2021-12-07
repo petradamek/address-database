@@ -1,4 +1,4 @@
-package cz.muni.fi.pv168.addresses;
+package cz.muni.fi.pv168.addresses.perftest;
 
 import cz.muni.fi.pv168.addresses.finder.AddressFinder;
 import cz.muni.fi.pv168.addresses.finder.AddressFinderFactory;
@@ -6,7 +6,6 @@ import cz.muni.fi.pv168.addresses.loader.DataLoaderFactory;
 import cz.muni.fi.pv168.addresses.model.Address;
 
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.logging.Logger;
 

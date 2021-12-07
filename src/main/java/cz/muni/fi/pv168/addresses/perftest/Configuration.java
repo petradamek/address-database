@@ -1,4 +1,4 @@
-package cz.muni.fi.pv168.addresses;
+package cz.muni.fi.pv168.addresses.perftest;
 
 import cz.muni.fi.pv168.addresses.finder.AddressFinderFactory;
 import cz.muni.fi.pv168.addresses.finder.indexed.IndexedAddressFinderFactory;
